@@ -22,7 +22,10 @@ var groupedBar = (function groupedBar(data, selector, params){
     
 	d3.json(data, function(data) {
 
-
+		factor = 1;
+		if (params.num_type == 'percent'){
+		    factor = 100;
+		}
 
 		//x0.domain(['group 1', '0']);
 		//console.log(x0);
@@ -39,7 +42,7 @@ var groupedBar = (function groupedBar(data, selector, params){
 		//.range([0, x0.bandwidth()]);
 		//console.log(x1, d3.map(data, function(d) { console.log(d.category); return d.category;}).keys());
 		
-		y.domain([0, d3.max(data, function(d) {return d.data*100;})+0.05*100])
+		y.domain([0, d3.max(data, function(d) {return d.data*factor;})+0.05*factor])
 		    
 		    
 		    //var z = d3.scaleOrdinal()
@@ -54,7 +57,8 @@ var groupedBar = (function groupedBar(data, selector, params){
 			.attr("height", "100%")
 			.attr("fill", params.bgcolor);
 		}
-      
+
+
 		svg.append("g").selectAll("g")
 		    .data(data)
 		    .enter().append("g")
@@ -64,14 +68,14 @@ var groupedBar = (function groupedBar(data, selector, params){
 		    //.data(function(d) { return d; }).enter()
 		    .append("rect")
 		    .attr("width", x1.bandwidth())
-		    .attr("height", function(d) { return y(0) - y(d.data*100);})//function() {console.log( y); return y;})
+		    .attr("height", function(d) { return y(0) - y(d.data*factor);})//function() {console.log( y); return y;})
 		    .attr("x", function(d, i) { return x1(d.group); })
-		    .attr("y", function(d, i) { return y(d.data*100); })
+		    .attr("y", function(d, i) { return y(d.data*factor); })
 		    .on("mouseover", function(d, i) {
 			    svg.append("text")
 				.attr("class", "title-text")
 				.style("fill", z(d.group))
-				.text(d.group + ', ' + d.category +': ' + Math.round(d.data*100, 0) +'%' )
+				.text(d.group + ', ' + d.category +': ' + Math.round(d.data*factor, 0) +'%' )
 				.attr("text-anchor", "start")
 				.attr("x", (width-margin.left - 100)/2)
 				.attr("y", 5);

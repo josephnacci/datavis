@@ -12,10 +12,10 @@ var svg = d3.select("#my_dataviz")
 
 
 
-d3.json("./ref_site_journey.json", function(data){
+d3.json("./ref_time_journey.json", function(data){
 
 	// A scale that gives a X target position for each group
-
+	data = data['Carpe Diem Shopper']
 
 	var steps = d3.map(data, function(d){return  +d.step;}).keys();
 
@@ -103,7 +103,7 @@ d3.json("./ref_site_journey.json", function(data){
 
 
 
-
+	var bubble_factor = 10;
 	
 	// Initialize the circle: all located at the center of the svg area
 	var node = svg.append("g")
@@ -111,7 +111,7 @@ d3.json("./ref_site_journey.json", function(data){
 	    .data(data)
 	    .enter()
 	    .append("circle")
-	    .attr("r", function(d, i){ return circleRad + d.size/3})
+	    .attr("r", function(d, i){ return circleRad + d.size/bubble_factor})
 	    .attr("cx", width / 2)
 	    .attr("cy", height / 2)
 	    .style("fill", function(d, i){ return color(d.type)})//d.group)})
@@ -161,7 +161,7 @@ d3.json("./ref_site_journey.json", function(data){
 	    .force("y", d3.forceY().strength(0.2).y( function(d){ return y(d.step) } ))
 	    //.force("center", d3.forceCenter().x(width / 2).y(height / 2)) // Attraction to the center of the svg area
 	    .force("charge", d3.forceManyBody().strength(3)) // Nodes are attracted one each other of value is > 0
-	    .force("collide", d3.forceCollide().strength(1).radius(function(d, i) { return circleRad + d.size/3}).iterations(1)); // Force that avoids circle overlapping
+	    .force("collide", d3.forceCollide().strength(1).radius(function(d, i) { return circleRad + d.size/bubble_factor}).iterations(1)); // Force that avoids circle overlapping
 	
 	// Apply these forces to the nodes and update their positions.
 	// Once the force algorithm is happy with positions ('alpha' value is low enough), simulations will stop.

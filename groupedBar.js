@@ -1,8 +1,22 @@
 var groupedBar = (function groupedBar(data, selector, params){
 
-	var margin = {top: 10, right: 30, bottom: 60, left: 40},
-	width = 400 - margin.left - margin.right,
-	height = 300 - margin.top - margin.bottom;
+	var margin = {top: 10, right: 30, bottom: 60, left: 40};
+
+	if ('width' in params){
+	    width = params.width
+	}
+	else{
+	    width = 400 - margin.left - margin.right;
+	}
+	
+	if ('height' in params){
+	    height = params.heigth - margin.top - margin.bottom;
+	}
+	else{
+	    height = 300 - margin.top - margin.bottom;
+	}
+
+
 
 	var y = d3.scaleLinear()
         .range([height, 0]);

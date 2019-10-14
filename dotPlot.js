@@ -1,9 +1,21 @@
 var dotPlot = (function dotPlot(url, selector, params){
 	var margin_dot = {top: 10, right: 200, bottom: 10, left: 110};
-	
-	var width_dot = 500 - margin_dot.left - margin_dot.right,
-	height_dot = 240 - margin_dot.top - margin_dot.bottom;
-	
+
+        if ('width' in params){
+            width_dot = params.width - margin_dot.left - margin_dot.right;
+	}
+        else{
+            width_dot = 500 - margin_dot.left - margin_dot.right;
+        }
+
+        if ('height' in params){
+            height_dot = params.height - margin_dot.top - margin_dot.bottom;
+        }
+        else{
+            height_dot = 240 - margin_dot.top - margin_dot.bottom;
+        }
+
+
 	
 	
 	var widthScale_dot = d3.scaleLinear()

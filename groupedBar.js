@@ -10,7 +10,7 @@ var groupedBar = (function groupedBar(data, selector, params){
 	}
 	
 	if ('height' in params){
-	    height = params.heigth - margin.top - margin.bottom;
+	    height = params.height - margin.top - margin.bottom;
 	}
 	else{
 	    height = 300 - margin.top - margin.bottom;

@@ -1,9 +1,25 @@
 var pieChart = (function pieChart(data_url, selector, params){
+	var margin = {top: 150, right: 10, bottom: 10, left: 150};
+
+        if ('width' in params){
+            width = params.width - margin.left - margin.right;
+        }
+        else{
+            width = 350 - margin.left - margin.right;//400 - margin.left - margin.right;
+        }
+
+        if ('height' in params){
+            height = params.height - margin.top - margin.bottom;//margin.top - margin.bottom;
+        }
+        else{
+            height = 400 - margin.top - margin.bottom;//300 - margin.top - margin.bottom;
+        }
+
+
 
 	// set the dimensions and margins of the graph
-	var margin = {top: 150, right: 10, bottom: 10, left: 150},
-	width = 350 - margin.left - margin.right,
-	height = 400 - margin.top - margin.bottom;
+
+
 	var radius = Math.min(width, height) / 2;
     
 	d3.selectAll(selector + " > *").remove();

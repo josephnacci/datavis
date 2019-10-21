@@ -10,14 +10,22 @@ var barChartParams = {'width': 300,
 //barChartWindowParams['data_url'] =  "http://localhost:5000/zulily_spend"
 //barChartWindowParams = barChart().fillChart(barChartWindowParams);
 
+params = {
+    title: "Consider x for yourself",
+    bgcolor: "black",
+    num_type: "percent",
+    "width": 700,
+    "height": 600,
+    "colorscheme": ["#7F00FF", "#aaa"]
+};
 
 
-pieChart("http://localhost:5000/zulily_spend", "#zulily_spend");
+groupedBar(
+	   "http://localhost:8000/groupedBar.json",//app.naccix.io/zulily/age?persona=" + persona,
+	   "#groupedBar",
+	   params
+	   );
 
-hGroupedBar("http://localhost:5000/attitude_by_spend", "#att_by_spend")
-
-
-multiLine("http://localhost:5000/line", "#multiline")
 //
 ////barChart("sales.csv", "#bar_chart", 500).fillChart("sales_2.csv", chartBase);
 //

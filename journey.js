@@ -3,7 +3,7 @@ var width = 800;
 var height = 700;
 
 // append the svg object to the body of the page
-var svg = d3.select("#my_dataviz")
+var svg = d3.select("#journey_map")
     .append("svg")
     .attr("width", width)
     .attr("height", height);
@@ -12,7 +12,7 @@ var svg = d3.select("#my_dataviz")
 
 
 
-d3.json("./ref_time_journey.json", function(data){
+d3.json("http://localhost:8000/ref_time_journey.json", function(data){
 
 	// A scale that gives a X target position for each group
 	data = data['Carpe Diem Shopper']

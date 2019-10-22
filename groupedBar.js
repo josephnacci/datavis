@@ -34,6 +34,14 @@ var groupedBar = (function groupedBar(data, selector, params){
 	.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
+
+	var div = d3.select(selector).append("div")
+	.attr("class", "tooltip")
+	.style("opacity", 1)
+	.style("background", "#aaa")
+	.style("position", "absolute");
+
+
 	d3.json(data, function(all_data) {
 		
 
@@ -117,6 +125,51 @@ var groupedBar = (function groupedBar(data, selector, params){
 			    svg.select(".title-text").remove();
 			});
 		
+		
+		if (!(highlight==="")){
+			svg.append("circle")
+			    .attr("class", "highlight-circle")
+			    .attr("cx", width-margin.right)
+			    .attr("cy", margin.top)
+			    .attr("r", 10)
+			    .style("fill", 'red')
+			    .each(pulse)
+			    .on("mouseover", mouseOver)
+			    .on("mouseout", mouseOut);
+		}
+
+		function mouseOver() {
+		    div.transition()
+			.duration(20)
+			.style("opacity", .9);
+		    div.html("<div style=';position: absolute; text-align: center;  width: 300px;  height: 200px;  padding: 2px;  font: 12px sans-serif;  background: lightsteelblue;  border: 0px;  border-radius: 8px;  pointer-events: none;'>" + highlight+ " </div>")
+			.style("left", width-margin.right - 270)//(d3.event.pageX - 60) + "px")
+			.style("top", margin.top+50)//(d3.event.pageY - 28) + "px")
+			.style("fill", "white");
+		    console.log('hi');
+		}
+
+		function mouseOut(){ 
+		    div.transition()
+			.duration(20)
+			.style("opacity", 0);
+
+		}
+
+		
+		function pulse() {
+		    var circle = svg.selectAll(".highlight-circle");
+		    (function repeat() {
+			circle = circle.transition()
+			    .duration(1500)
+			    .attr("r", 5)
+			    .transition()
+			    .duration(1500)
+			    .attr("r", 10)
+			    .ease(d3.easeSin)
+			    .on("end", repeat);
+		    })();
+		};
 		
 		
 		
@@ -245,8 +298,7 @@ var groupedBar = (function groupedBar(data, selector, params){
 		//    .attr("dy", "1em")
 		//    .style("text-anchor", "middle")
 		//    .text(ylabel);
-		
-	    
+
 
 		
 	    });
@@ -254,3 +306,4 @@ var groupedBar = (function groupedBar(data, selector, params){
 	
 	
     });
+

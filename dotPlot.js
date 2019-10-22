@@ -37,15 +37,7 @@ var dotPlot = (function dotPlot(url, selector, params){
 	//.innerTickSize([0]);
 	
 	
-	
-	
-	var fullwidth = 200,
-	fullheight = 1000;
-	//var svg_dot = d3.select(selector)
-	//.append("svg")
-	//.attr("width", fullwidth)
-	//.attr("height", fullheight);
-	d3.selectAll(selector + " > *").remove();
+      	d3.selectAll(selector + " > *").remove();
 
 	var svg_dot = d3.select(selector).append("svg")
         .attr("width", width_dot + margin_dot.left + margin_dot.right)
@@ -56,7 +48,7 @@ var dotPlot = (function dotPlot(url, selector, params){
 	
 	
 	
-	d3.json(url, function(error, data) {
+	d3.json(url, function(error, all_data) {
 
 		/////////////////////////DOTS
 		//dot_data.sort(function(a, b) {
@@ -64,11 +56,20 @@ var dotPlot = (function dotPlot(url, selector, params){
 		//    });
 
 		// in this case, i know it's out of 100 because it's percents.
+		console.log(all_data);
+		data = all_data['data'];
+		xlabel = all_data['xlabel'];
+		ylabel = all_data['ylabel'];
+		title = all_data['title'];
+		highlight = all_data['highlight'];
+
+		
+
 
 		data = data.sort(function(x, y){
 			return d3.descending(+x.group_score, +y.group_score);
 		    });
-		console.log(data);
+
 
 		widthScale_dot.domain([ d3.min(data, function(d) {return d3.min([d.group_score, d.non_group_score]);})*0.9
 					, d3.max(data, function(d) {return d3.max([d.group_score, d.non_group_score]);})*1.2 ] );

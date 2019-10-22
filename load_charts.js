@@ -26,6 +26,12 @@ groupedBar(
 	   params
 	   );
 
+dotPlot(
+	   "http://localhost:8000/dotPlot.json",//app.naccix.io/zulily/age?persona=" + persona,
+	   "#dotPlot",
+	   params
+	   );
+
 
 
 //

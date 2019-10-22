@@ -72,9 +72,15 @@ var dotPlot = (function dotPlot(url, selector, params){
 
 
 		
-
-		widthScale_dot.domain([ d3.min(data, function(d) {return d3.min([d.group_score, d.non_group_score]);})*0.9
-					, d3.max(data, function(d) {return d3.max([d.group_score, d.non_group_score]);})*1.2 ] );
+		if( params.data_format == "percent"){
+		    var factor = 100;
+		}
+		else{
+		    var factor = 1;
+		}
+		
+		widthScale_dot.domain([ d3.min(data, function(d) {return d3.min([d.group_score, d.non_group_score]);})*0.9*factor
+					, d3.max(data, function(d) {return d3.max([d.group_score, d.non_group_score]);})*1.2*factor ] );
 		
 		// js map: will make a new array out of all the d.name fields
 		heightScale_dot.domain(data.map(function(d) { return d.question; } ))
@@ -176,7 +182,7 @@ var dotPlot = (function dotPlot(url, selector, params){
 				.append("svg:title")
 				.text(function() {
 					if (params.data_format == 'percent'){
-					    return d1.question + " (" + other_name + "): " + Math.round(d1.non_group_score*100, 2) + "%";
+					    return d1.question + " (" + other_name + "): " + d1.non_group_score*100.toFixed(1) + "%";
 					}
 					else{
 					    return d1.question + " (" + other_name + "): $" + Math.round(d1.non_group_score, 2);
@@ -216,7 +222,7 @@ var dotPlot = (function dotPlot(url, selector, params){
 				.append("svg:title")
 				.text(function() {
 					if (params.data_format == 'percent'){
-					    return d1.question + " (" + group_name + "): " + Math.round(d1.group_score*100, 2) + "%";
+					    return d1.question + " (" + group_name + "): " + (d1.group_score*100).toFixed(1) + "%";
 					}
 					else{
 					    return d1.question + " (" + group_name + "): $" + Math.round(d1.group_score, 2);

@@ -56,7 +56,7 @@ var dotPlot = (function dotPlot(url, selector, params){
 		//    });
 
 		// in this case, i know it's out of 100 because it's percents.
-		console.log(all_data);
+
 		data = all_data['data'];
 		xlabel = all_data['xlabel'];
 		ylabel = all_data['ylabel'];

@@ -46,9 +46,9 @@ var groupedBar = (function groupedBar(data, selector, params){
 		
 
 
-		xlabel = all_data['xaxis'];
+		xlabel = all_data['xlabel'];
 		title = all_data['title'];
-		ylabel = all_data['yaxis'];
+		ylabel = all_data['ylabel'];
 		highlight = all_data['highlight'];
 		data = all_data['data'];
 

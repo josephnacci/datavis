@@ -15,7 +15,7 @@ params = {
     bgcolor: "black",
     num_type: "percent",
     "width": 700,
-    "height": 600,
+    "height": 300,
     "colorscheme": ["#7F00FF", "#aaa"]
 };
 

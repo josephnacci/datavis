@@ -72,10 +72,10 @@ var dotPlot = (function dotPlot(url, selector, params){
 
 
 		
-		if( params.data_format == "percent"){
+		if (params.num_type == "percent") {
 		    var factor = 100;
 		}
-		else{
+		else {
 		    var factor = 1;
 		}
 		
@@ -110,12 +110,12 @@ var dotPlot = (function dotPlot(url, selector, params){
 		linesGrid.attr("class", "grid")
 		    .attr("x1", margin.left)
 		    .attr("y1", function(d) {
-			    console.log(d.question, heightScale_dot(d.question), console.log(heightScale_dot.bandwidth()));
+			    //console.log(d.question, heightScale_dot(d.question), console.log(heightScale_dot.bandwidth()));
 			    return heightScale_dot(d.question);// + heightScale_dot.bandwidth();//rangeBand()/2;
 			})
 		    .attr("x2", function(d) {
-			    return d3.max([margin.left + widthScale_dot(+d.group_score),
-					   margin.left + widthScale_dot(d.non_group_score)]);
+			    return d3.max([margin.left + widthScale_dot(+d.group_score*factor),
+					   margin.left + widthScale_dot(d.non_group_score*factor)]);
 			        
 			})
 		    .attr("y2", function(d) {
@@ -131,13 +131,13 @@ var dotPlot = (function dotPlot(url, selector, params){
 		
 		linesBetween.attr("class", "between")
 		    .attr("x1", function(d) {
-			    return margin.left + widthScale_dot(+d.non_group_score);
+			    return margin.left + widthScale_dot(+d.non_group_score*factor);
 			})
 		    .attr("y1", function(d) {
 			    return heightScale_dot(d.question);// + heightScale_dot.bandwidth();//rangeBand()/2;
 			})
 		    .attr("x2", function(d) {
-			    return margin.left + widthScale_dot(d.group_score);
+			    return margin.left + widthScale_dot(d.group_score*factor);
 			})
 		    .attr("y2", function(d) {
 			    return heightScale_dot(d.question);// + heightScale_dot.bandwidth();//rangeBand()/2;
@@ -170,7 +170,7 @@ var dotPlot = (function dotPlot(url, selector, params){
 		dots_non_customer
 		    .attr("class", "non_group")
 		    .attr("cx", function(d) {
-			    return margin.left + widthScale_dot(+d.non_group_score);
+			    return margin.left + widthScale_dot(+d.non_group_score*factor);
 			})
 		    .attr("r", dotSize)//heightScale_dot.bandwidth()/5)///rangeBand()/5)
 		    .attr("fill", color('non_group'))
@@ -181,8 +181,8 @@ var dotPlot = (function dotPlot(url, selector, params){
 			    d3.select(this).attr("r", mouseoverDotSize)
 				.append("svg:title")
 				.text(function() {
-					if (params.data_format == 'percent'){
-					    return d1.question + " (" + other_name + "): " + d1.non_group_score*100.toFixed(1) + "%";
+					if (params.num_type == 'percent'){
+					    return d1.question + " (" + other_name + "): " + (d1.non_group_score*100).toFixed(1) + "%";
 					}
 					else{
 					    return d1.question + " (" + other_name + "): $" + Math.round(d1.non_group_score, 2);
@@ -209,7 +209,7 @@ var dotPlot = (function dotPlot(url, selector, params){
 		dots_customer
 		    .attr("class", "group")
 		    .attr("cx", function(d) {
-			    return margin.left + widthScale_dot(+d.group_score);
+			    return margin.left + widthScale_dot(+d.group_score*factor);
 			})
 		    .attr("r", dotSize)//heightScale_dot.bandwidth()/5)//rangeBand()/5)
 		    .attr("fill", color('group'))
@@ -221,7 +221,7 @@ var dotPlot = (function dotPlot(url, selector, params){
 			    d3.select(this).attr("r", mouseoverDotSize)
 				.append("svg:title")
 				.text(function() {
-					if (params.data_format == 'percent'){
+					if (params.num_type == 'percent'){
 					    return d1.question + " (" + group_name + "): " + (d1.group_score*100).toFixed(1) + "%";
 					}
 					else{

@@ -16,7 +16,8 @@ params = {
     num_type: "percent",
     "width": 700,
     "height": 300,
-    "colorscheme": ["#7F00FF", "#aaa"]
+    "colorscheme": ["#7F00FF", "#aaa"],
+    fill_bar: 'nofill'
 };
 
 

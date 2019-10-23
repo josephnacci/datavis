@@ -118,7 +118,7 @@ var groupedBar = (function groupedBar(data, selector, params){
 		    .attr("height", function(d) { return y(0) - y(d.data*factor) - stroke_width/2;})//function() {console.log( y); return y;})
 		    .attr("x", function(d, i) { return x1(d.group); })
 		    .attr("y", function(d, i) { return y(d.data*factor); })
-		    .style('fill', params.fill_bar?params.bgcolor:z(d.group));
+		    .style('fill', params.fill_bar?params.bgcolor:z(d.group))
 		    .on("mouseover", function(d, i) {
 			    svg.append("text")
 				.attr("class", "title-text")

@@ -46,15 +46,28 @@ var pieChart = (function pieChart(data_url, selector, params){
         .outerRadius(radius - 40)
         .innerRadius(radius - 40);
 
-	d3.json(data_url, function(data) {
+	d3.json(data_url, function(all_data) {
 		//if (error) throw error;
 		console.log(data);
 
 
+		data = all_data['data'];
+		title = all_data['title'];
+		    
+
 		// set the color scale
 		var color = d3.scaleOrdinal()
-		    .domain(data)
-		    .range(d3.schemeSet2);
+		    .domain(data);
+		
+		
+		if (params.colorscheme){
+                    color.range(params.colorscheme);
+                }
+                else{
+                    color.range(d3.schemeSet2);
+                }
+
+
 
 		// Compute the position of each group on the pie:
 		var pie = d3.pie()

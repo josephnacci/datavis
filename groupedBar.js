@@ -103,7 +103,6 @@ var groupedBar = (function groupedBar(data, selector, params){
 		    .enter().append("g")
 		    .style("stroke", function(d, i) { return z(d.group); })
 		    .attr('stroke-width', stroke_width)
-		    .attr('stroke-align', 'inner')
 		    .attr("transform", function(d, i) { return "translate(" + x0(d.category) + ",0)"; })
 		    //.selectAll("rect")
 		    //.data(function(d) { return d; }).enter()
@@ -112,6 +111,7 @@ var groupedBar = (function groupedBar(data, selector, params){
 		    .attr("height", function(d) { return y(0) - y(d.data*factor) - stroke_width/2;})//function() {console.log( y); return y;})
 		    .attr("x", function(d, i) { return x1(d.group); })
 		    .attr("y", function(d, i) { return y(d.data*factor); })
+		    .style('fill', params.fill_bar?params.bgcolor:z(d.group));
 		    .on("mouseover", function(d, i) {
 			    svg.append("text")
 				.attr("class", "title-text")

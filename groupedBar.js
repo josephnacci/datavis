@@ -98,6 +98,13 @@ var groupedBar = (function groupedBar(data, selector, params){
 
 		var stroke_width=5;
 
+		if (params.num_type == "percent"){
+		    suffix = '%';
+		}
+		else{
+		    suffix = '';
+		}
+
 		svg.append("g").selectAll("g")
 		    .data(data)
 		    .enter().append("g")
@@ -116,7 +123,7 @@ var groupedBar = (function groupedBar(data, selector, params){
 			    svg.append("text")
 				.attr("class", "title-text")
 				.style("fill", z(d.group))
-				.text(d.group + ', ' + d.category +': ' + (d.data*factor).toFixed(1) +'%' )
+				.text(d.group + ', ' + d.category +': ' + (d.data*factor).toFixed(1) + suffix )
 				.attr("text-anchor", "start")
 				.attr("x", (width-margin.left - 100)/2)
 				.attr("y", 10);

@@ -1,21 +1,52 @@
 // set the dimensions and margins of the graph
+var journeyMap = (function journeyMap(data, selector, params){
+
+margin = {top: 10, left: 10, right: 10, bottom: 10}
+
 var width = 800;
-var height = 700;
+var height = 800;
 
 // append the svg object to the body of the page
-var svg = d3.select("#journey_map")
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height);
+
+d3.selectAll(selector + " > *").remove();
+
+
+var svg = d3.select(selector).append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+//
+//
+//var svg = d3.select("#journey_map")
+//    .append("svg")
+//    .attr("width", width)
+//    .attr("height", height + margin.top);
 
 // create dummy data -> just one element per circle
 
 
 
-d3.json("http://localhost:8000/ref_time_journey.json", function(data){
+d3.json(data, function(data){
 
 	// A scale that gives a X target position for each group
-	data = data['Carpe Diem Shopper']
+	//data = data['Carpe Diem Shopper'];
+
+
+	if (params.bgcolor){
+	    svg.append("rect")
+		.attr("x", -margin.left)
+		.attr("y", -margin.top)
+		.attr("width", "100%")
+		.attr("height", "100%")
+		.attr("fill", params.bgcolor);
+	}
+	
+
+	//data = d3.map(data, function(d){ if (d.size > 50) {return d;}});
+	data = data.filter(function(d) { if (d.size > params.cutoff & !(d.type == "Web Browsers")) {return d;}});
+	var bubble_factor = params.bubble_factor;
+
 
 	var steps = d3.map(data, function(d){return  +d.step;}).keys();
 
@@ -90,7 +121,16 @@ d3.json("http://localhost:8000/ref_time_journey.json", function(data){
             .attr("r", 60)
             .attr("cx", function(d){console.log(d); return x(d);})
             .attr("cy", function(d){ return y(d);})
-	    .style("stroke", "gray")
+	    .style("stroke", function(){
+		    if (params.bgcolor){
+			if (params.bgcolor == 'black'){
+			    return 'white';
+			}
+		    }
+		    else{
+                                return 'black'
+		    }
+		})//"gray")
 	    .style("fill", "transparent")
 	
 	
@@ -103,7 +143,7 @@ d3.json("http://localhost:8000/ref_time_journey.json", function(data){
 
 
 
-	var bubble_factor = 10;
+
 	
 	// Initialize the circle: all located at the center of the svg area
 	var node = svg.append("g")
@@ -116,8 +156,17 @@ d3.json("http://localhost:8000/ref_time_journey.json", function(data){
 	    .attr("cy", height / 2)
 	    .style("fill", function(d, i){ return color(d.type)})//d.group)})
 	    .style("fill-opacity", 0.8)
-	    .attr("stroke", "black")
-	    .style("stroke-width", 2)
+	    .attr("stroke", function(){
+		    if (params.bgcolor){
+			if (params.bgcolor == 'black'){
+			    return 'white';
+			}
+		    }
+		    else{
+                                return 'black'
+		    }
+		})//"black")
+	    .style("stroke-width", 1.5)
 	    //.append('path')
 	    //.attr('d', pathData)
 
@@ -128,12 +177,12 @@ d3.json("http://localhost:8000/ref_time_journey.json", function(data){
 		  .on("end", dragended))
 	    .on('mouseover', function(d, i){
 		    linesGrid.attr('opacity', function(dl){
-
+			    
 			    if (d.name == dl.name){
-				    console.log(d.name, dl.name)
-				    return 1;
-				    //linesGrid._groups[0][i].attributes['opacity'] = 1;//('opacity', 1);
-
+				console.log(d.name, dl.name)
+				return 1;
+				//linesGrid._groups[0][i].attributes['opacity'] = 1;//('opacity', 1);
+				
 			    }
 			    else{
 				return 0;
@@ -142,9 +191,20 @@ d3.json("http://localhost:8000/ref_time_journey.json", function(data){
 		    d3.select(this.parentNode).append("text")//appending it to path's parent which is the g(group) DOM
 		    .attr("x", 0)
 		    .attr("y", height/2)
-		    .attr("dx", "6") // margin
-		    .attr("dy", ".35em") // vertical-align
+		    .attr("dx", "200") // margin
+		    .attr("dy", "0.25em") // vertical-align
 		    .attr("class", "mylabel")//adding a label class
+		    .attr("text-anchor", "end")
+		    .style("fill", function(){
+                            if (params.bgcolor){
+                                if (params.bgcolor == 'black'){
+                                    return 'white';
+                                }
+                            }
+                            else{
+                                return 'black'
+			    }
+                        })
 		    .text(function() {
 			    return d.name;
 			});
@@ -182,7 +242,7 @@ d3.json("http://localhost:8000/ref_time_journey.json", function(data){
 	
 	
 	linesGrid.attr("class", "grid")
-	    .attr("x1", 0)
+	    .attr("x1", 210)
 	    .attr("y1", height/2)
 	    .attr("x2", function(d) {
 		    return d.y
@@ -190,7 +250,16 @@ d3.json("http://localhost:8000/ref_time_journey.json", function(data){
 	    .attr("y2", function(d) {
 		    return d.x;// + heightScale_dot.bandwidth();//rangeBand()/2;                                                    
 		})
-	    .attr('stroke', '#000')
+	    .attr('stroke', function(){
+		    if (params.bgcolor){
+			if (params.bgcolor == 'black'){
+			    return 'white';
+			}
+		    }
+		    else{
+                                return 'black'
+                                    }
+		})//'#000')
 	    .attr('stroke-width', 2)	
 	    .attr("opacity", 0);
 	
@@ -235,9 +304,21 @@ d3.json("http://localhost:8000/ref_time_journey.json", function(data){
 	    .attr("x", width -24)
 	    .attr("y", 9.5)
 	    .attr("dy", "0.32em")
-	    .text(function(d) { return d; });
+	    .text(function(d) { return d; })
+	    .style("fill", function(){
+		    if (params.bgcolor){
+			if (params.bgcolor == 'black'){
+			    return 'white';
+			}
+		    }
+		    else{
+			return 'black';
+		    }
+		})
+;
 	
 	
 	
     
+    });
     });

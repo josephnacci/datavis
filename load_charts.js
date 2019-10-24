@@ -21,19 +21,22 @@ params = {
 };
 
 
-groupedBar(
-	   "http://localhost:8000/groupedBar.json",//app.naccix.io/zulily/age?persona=" + persona,
-	   "#groupedBar",
-	   params
-	   );
+//groupedBar(
+//	   "http://localhost:8000/groupedBar.json",//app.naccix.io/zulily/age?persona=" + persona,
+//	   "#groupedBar",
+//	   params
+//	   );
+//
+//dotPlot(
+//	   "http://localhost:8000/dotPlot.json",//app.naccix.io/zulily/age?persona=" + persona,
+//	   "#dotPlot",
+//	   params
+//	   );
+//
+//
 
-dotPlot(
-	   "http://localhost:8000/dotPlot.json",//app.naccix.io/zulily/age?persona=" + persona,
-	   "#dotPlot",
-	   params
-	   );
 
-
+journeyMap('', '#journey_map', {cutoff: 40, bubble_factor: 50, bgcolor: 'black'})
 
 //
 ////barChart("sales.csv", "#bar_chart", 500).fillChart("sales_2.csv", chartBase);

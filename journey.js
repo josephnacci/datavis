@@ -1,5 +1,5 @@
 // set the dimensions and margins of the graph
-var journeyMap = (function journeyMap(data, selector, params){
+var journeyMap = (function journeyMap(data_url, selector, params){
 
 margin = {top: 10, left: 10, right: 10, bottom: 10}
 
@@ -27,9 +27,10 @@ var svg = d3.select(selector).append("svg")
 
 
 
-d3.json(data, function(data){
+d3.json(data_url, function(data){
 
 	// A scale that gives a X target position for each group
+	//console.log(data);
 	//data = data['Carpe Diem Shopper'];
 
 

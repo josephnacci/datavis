@@ -36,7 +36,7 @@ params = {
 //
 
 
-journeyMap('', '#journey_map', {cutoff: 40, bubble_factor: 50, bgcolor: 'black'})
+journeyMap('http://localhost:8000/ref_time_journey.json', '#journey_map', {cutoff: 40, bubble_factor: 50, bgcolor: 'black'})
 
 //
 ////barChart("sales.csv", "#bar_chart", 500).fillChart("sales_2.csv", chartBase);

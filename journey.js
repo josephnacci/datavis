@@ -132,9 +132,37 @@ d3.json(data_url, function(data){
                                 return 'black'
 		    }
 		})//"gray")
-	    .style("fill", "transparent")
+	    .style("fill", "transparent");
 	
-	
+	var interval = 60;
+	var time_step = interval/steps.length;
+
+	var circle_text = svg.append("g")
+	    .selectAll('bg_text')
+	    .data(steps)
+	    .enter()
+	    .append("text")
+	    .attr("class", "bg_text")//adding a label class
+	    .attr("x", function(d){ return x(d);})
+	    .attr("y", function(d){ return y(d);})
+	    .attr("dx", "0") // margin
+	    .attr("dy", "70") // vertical-align
+	    .attr("text-anchor", "middle")
+	    .style("fill", function(){
+		    if (params.bgcolor){
+			if (params.bgcolor == 'black'){
+			    return 'white';
+			}
+		    }
+		    else{
+                                return 'black'
+		    }
+		})
+	    .text(function(d){ return Math.abs(time_step * (d-steps.length/2)) + ' minutes ' + ((d-steps.length/2) < 0?'before':'after') +
+			       ' to ' + Math.abs((time_step) * (d-steps.length/2+1)) + ' minutes ' + ((d-steps.length/2+1) < 0?'before':'after');});
+
+
+
 	var circleRad = 5;
 
 	var linesGrid = svg.append("g").selectAll("g")//svg_dot.selectAll("lines.grid")                                                                 

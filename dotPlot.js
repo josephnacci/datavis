@@ -64,11 +64,19 @@ var dotPlot = (function dotPlot(url, selector, params){
 		dot_highlight = all_data['highlight'];
 		group_name = all_data['group_name'];
 		other_name = all_data['other_name'];
-
-
-		data = data.sort(function(x, y){
-			return d3.descending(+x.group_score, +y.group_score);
-		    });
+		if (params.sort == 'group_value'){
+		    data = data.sort(function(x, y){
+			    return d3.descending(+x.group_score, +y.group_score);
+			});
+		}
+		else if (params.sort == 'outgroup_value'){
+		    data = data.sort(function(x, y){
+			    return d3.descending(+x.non_group_score, +y.non_group_score);
+			});
+		}
+		else{
+		    data = data;
+		}
 
 
 		

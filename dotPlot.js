@@ -80,6 +80,8 @@ var dotPlot = (function dotPlot(url, selector, params){
 
 
 		
+
+		
 		if (params.num_type == "percent") {
 		    var factor = 100;
 		}
@@ -91,11 +93,11 @@ var dotPlot = (function dotPlot(url, selector, params){
 					, d3.max(data, function(d) {return d3.max([d.group_score, d.non_group_score]);})*1.2*factor ] );
 		
 		// js map: will make a new array out of all the d.name fields
-		heightScale_dot.domain(data.map(function(d) { return d.question; } ))
+		heightScale_dot.domain(data.map(function(d) { return d.question.trim(); } ))
 		    .rangeRound([0, height_dot-10]);//width - margin.right])                                                                                                   
 		
 		
-		yAxis_dot.domain(data.map(function(d) { return d.question; } ))
+		yAxis_dot.domain(data.map(function(d) { return d.question.trim(); } ))
 		    .rangeRound([0, height_dot-10]);//width - margin.right])                                                                                                                  
 		
 		
@@ -119,7 +121,7 @@ var dotPlot = (function dotPlot(url, selector, params){
 		    .attr("x1", margin.left)
 		    .attr("y1", function(d) {
 			    //console.log(d.question, heightScale_dot(d.question), console.log(heightScale_dot.bandwidth()));
-			    return heightScale_dot(d.question);// + heightScale_dot.bandwidth();//rangeBand()/2;
+			    return heightScale_dot(d.question.trim());// + heightScale_dot.bandwidth();//rangeBand()/2;
 			})
 		    .attr("x2", function(d) {
 			    return d3.max([margin.left + widthScale_dot(+d.group_score*factor),
@@ -127,7 +129,7 @@ var dotPlot = (function dotPlot(url, selector, params){
 			        
 			})
 		    .attr("y2", function(d) {
-			    return heightScale_dot(d.question);// + heightScale_dot.bandwidth();//rangeBand()/2;
+			    return heightScale_dot(d.question.trim());// + heightScale_dot.bandwidth();//rangeBand()/2;
 			})
 		    .attr("stroke", '#eee');
 		
@@ -142,13 +144,13 @@ var dotPlot = (function dotPlot(url, selector, params){
 			    return margin.left + widthScale_dot(+d.non_group_score*factor);
 			})
 		    .attr("y1", function(d) {
-			    return heightScale_dot(d.question);// + heightScale_dot.bandwidth();//rangeBand()/2;
+			    return heightScale_dot(d.question.trim());// + heightScale_dot.bandwidth();//rangeBand()/2;
 			})
 		    .attr("x2", function(d) {
 			    return margin.left + widthScale_dot(d.group_score*factor);
 			})
 		    .attr("y2", function(d) {
-			    return heightScale_dot(d.question);// + heightScale_dot.bandwidth();//rangeBand()/2;
+			    return heightScale_dot(d.question.trim());// + heightScale_dot.bandwidth();//rangeBand()/2;
 			})
 		    .attr("stroke", 'black')
 		    .attr("stroke-dasharray", "5,5")
@@ -190,10 +192,10 @@ var dotPlot = (function dotPlot(url, selector, params){
 				.append("svg:title")
 				.text(function() {
 					if (params.num_type == 'percent'){
-					    return d1.question + " (" + other_name + "): " + (d1.non_group_score*100).toFixed(1) + "%";
+					    return d1.question.trim() + " (" + other_name + "): " + (d1.non_group_score*100).toFixed(1) + "%";
 					}
 					else{
-					    return d1.question + " (" + other_name + "): $" + Math.round(d1.non_group_score, 2);
+					    return d1.question.trim() + " (" + other_name + "): $" + Math.round(d1.non_group_score, 2);
 					}
 				    })
       
@@ -204,7 +206,7 @@ var dotPlot = (function dotPlot(url, selector, params){
 
 				})
 		    .attr("cy", function(d) {
-			    return heightScale_dot(d.question);// + heightScale_dot.bandwidth()/2;//rangeBand()/2;
+			    return heightScale_dot(d.question.trim());// + heightScale_dot.bandwidth()/2;//rangeBand()/2;
 			});
 		
 		// Make the dots for 2015
@@ -223,17 +225,17 @@ var dotPlot = (function dotPlot(url, selector, params){
 		    .attr("fill", color('group'))
 
 		    .attr("cy", function(d) {
-			    return heightScale_dot(d.question);// + heightScale_dot.bandwidth()/2;//rangeBand()/2;
+			    return heightScale_dot(d.question.trim());// + heightScale_dot.bandwidth()/2;//rangeBand()/2;
 			})
 		    .on('mouseover', function(d1){
 			    d3.select(this).attr("r", mouseoverDotSize)
 				.append("svg:title")
 				.text(function() {
 					if (params.num_type == 'percent'){
-					    return d1.question + " (" + group_name + "): " + (d1.group_score*100).toFixed(1) + "%";
+					    return d1.question.trim() + " (" + group_name + "): " + (d1.group_score*100).toFixed(1) + "%";
 					}
 					else{
-					    return d1.question + " (" + group_name + "): $" + Math.round(d1.group_score, 2);
+					    return d1.question.trim() + " (" + group_name + "): $" + Math.round(d1.group_score, 2);
 					}
 				    })
 				})
@@ -250,7 +252,7 @@ var dotPlot = (function dotPlot(url, selector, params){
 		oid_text
 		    .attr("class", "oid_text")
 		    .attr("dy", "0.3em")
-		    .attr("y", function(d) {return heightScale_dot(d.question);})
+		    .attr("y", function(d) {return heightScale_dot(d.question.trim());})
 		    .attr("x", function(d) {return margin.left + d3.max([widthScale_dot(+d.group_score*factor), widthScale_dot(+d.non_group_score*factor)]) + 20;})
                     .style('fill', function(){
                             if (params.bgcolor){

@@ -122,7 +122,7 @@ var groupedBar = (function groupedBar(data, selector, params){
 				return z(d.group);
 			    }
 			    else{
-				return params.gb_color;
+				return params.bg_color;
 			    }})
 		    .on("mouseover", function(d, i) {
 			    svg.append("text")

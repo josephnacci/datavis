@@ -240,6 +240,30 @@ var dotPlot = (function dotPlot(url, selector, params){
 		    .on('mouseout', function(d1){
 			    d3.select(this).attr("r", dotSize)
 				});
+
+
+
+		var oid_text = svg.append("g").selectAll("g")//.selectAll("circle.y2015")
+		    .data(data)
+		    .enter()
+		    .append("text");
+		oid_text
+		    .attr("class", "oid_text")
+		    .attr("dy", "0.3em")
+		    .attr("y", function(d) {return heightScale_dot(d.question);})
+		    .attr("x", function(d) {return margin.left + d3.max([widthScale_dot(+d.group_score*factor), widthScale_dot(+d.non_group_score*factor)]) + 20;})
+                    .style('fill', function(){
+                            if (params.bgcolor){
+                                if (params.bgcolor == 'black'){
+                                    return 'white';
+                                }
+                            }
+                            else{
+                                return 'black';
+                            }
+                        })
+                    .text(function(d) {return (d.group_score/d.non_group_score).toFixed(2)  + "x"});
+
 		
 		// add the axes
 		
@@ -279,6 +303,9 @@ var dotPlot = (function dotPlot(url, selector, params){
 		    .attr("class", "yaxisdot")
 		    .attr("transform", "translate(" + margin.left + ",0)")
 		    .call(d3.axisLeft(yAxis_dot));
+		yaxis.selectAll(".tick text")
+		    .call(wrap, 190);
+
   
 		yaxis.selectAll("path")
 		    .style("stroke", function(){
@@ -303,13 +330,12 @@ var dotPlot = (function dotPlot(url, selector, params){
 			    else{
 				return 'black'
 				    }
-			})
-		    .call(wrap, 200);
+			});
 		
 
 
 		svg.append("text")
-                    .attr("transform", "translate(" + (width / 2) + " ," + (height + margin.bottom - margin.top+2) + ")")
+                    .attr("transform", "translate(" + (width_dot / 2) + " ," + (height_dot + margin.bottom - margin.top+2) + ")")
                     .attr("dy", "1em")
                     .style("text-anchor", "middle")
                     .style('fill', function(){
@@ -326,7 +352,7 @@ var dotPlot = (function dotPlot(url, selector, params){
 
 
 		svg.append("text")
-                    .attr("transform", "translate(" + (width / 2) + " ," + (-margin.top+5) + ")")
+                    .attr("transform", "translate(" + (width_dot / 2) + " ," + (-margin.top+5) + ")")
                     .attr("dy", "1em")
                     .style("text-anchor", "middle")
                     .style('fill', function(){
@@ -344,32 +370,40 @@ var dotPlot = (function dotPlot(url, selector, params){
 
 
 
-		function wrap(text, width) {
-		    text.each(function() {
-			    var text = d3.select(this),
-				words = text.text().split(/\s+/).reverse(),
-				word,
-				line = [],
-				lineNumber = 0,
-				lineHeight = 1.1, // ems
-				y = text.attr("y"),
-				dy = parseFloat(text.attr("dy")),
-				tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em")
-				while (word = words.pop()) {
-				    line.push(word)
-				    tspan.text(line.join(" "))
-				    if (tspan.node().getComputedTextLength() > width) {
-					line.pop()
-					tspan.text(line.join(" "))
-					line = [word]
-					tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", `${++lineNumber * lineHeight + dy}em`).text(word)
-				    }
-				}
-			})
-			}
-
-
-
 		
-	    })
+	    });
+	function wrap(text, width) {
+	    console.log(text, width);
+	    text.each(function() {
+		    var text = d3.select(this),
+			words = text.text().split(/\s+/).reverse(),
+			word,
+			line = [],
+			lineNumber = 0,
+			lineHeight = 1.1, // ems
+			y = text.attr("y"),
+			dy = parseFloat(text.attr("dy")),
+			dx = -0.3,
+			tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em").attr("dx", dx + "em").style('fill', 'white')
+			while (word = words.pop()) {
+			    console.log(word);
+			    line.push(word)
+			    tspan.text(line.join(" "))
+			    if (tspan.node().getComputedTextLength() > width) {
+				line.pop()
+				tspan.text(line.join(" "))
+				line = [word]
+				tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy",  ++lineNumber * lineHeight + "em").attr("dx", dx + "em").text(word).style('fill', 'white')
+			    }
+			}
+		})
+		}
+
+
+
+
+
+
+
+	
     });

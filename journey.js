@@ -1,49 +1,49 @@
 // set the dimensions and margins of the graph
 var journeyMap = (function journeyMap(data_url, selector, params){
 
-margin = {top: 10, left: 10, right: 10, bottom: 10}
-
-var width = 800;
-var height = 800;
-
-// append the svg object to the body of the page
-
-d3.selectAll(selector + " > *").remove();
-
-
-var svg = d3.select(selector).append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-//
-//
-//var svg = d3.select("#journey_map")
-//    .append("svg")
-//    .attr("width", width)
-//    .attr("height", height + margin.top);
-
-// create dummy data -> just one element per circle
-
-
-
-d3.json(data_url, function(data){
-
-	// A scale that gives a X target position for each group
-	//console.log(data);
-	//data = data['Carpe Diem Shopper'];
-
-
-	if (params.bgcolor){
-	    svg.append("rect")
-		.attr("x", -margin.left)
-		.attr("y", -margin.top)
-		.attr("width", "100%")
-		.attr("height", "100%")
-		.attr("fill", params.bgcolor);
-	}
+	margin = {top: 10, left: 10, right: 10, bottom: 10}
 	
-
+	var width = 800;
+	var height = 800;
+	
+// append the svg object to the body of the page
+	
+	d3.selectAll(selector + " > *").remove();
+	
+	
+	var svg = d3.select(selector).append("svg")
+	.attr("width", width + margin.left + margin.right)
+	.attr("height", height + margin.top + margin.bottom)
+	.append("g")
+	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	//
+	//
+	//var svg = d3.select("#journey_map")
+	//    .append("svg")
+	//    .attr("width", width)
+	//    .attr("height", height + margin.top);
+	
+	// create dummy data -> just one element per circle
+	
+	
+	
+	d3.json(data_url, function(data){
+		
+		// A scale that gives a X target position for each group
+		//console.log(data);
+		//data = data['Carpe Diem Shopper'];
+		
+		
+		if (params.bgcolor){
+		    svg.append("rect")
+			.attr("x", -margin.left)
+			.attr("y", -margin.top)
+			.attr("width", "100%")
+			.attr("height", "100%")
+			.attr("fill", params.bgcolor);
+		}
+	
+	
 	//data = d3.map(data, function(d){ if (d.size > 50) {return d;}});
 	data = data.filter(function(d) { if (d.size > params.cutoff & !(d.type == "Web Browsers")) {return d;}});
 	var bubble_factor = params.bubble_factor;
@@ -180,7 +180,7 @@ d3.json(data_url, function(data){
 	    .data(data)
 	    .enter()
 	    .append("circle")
-	    .attr("r", function(d, i){ return circleRad + d.size/bubble_factor})
+	    .attr("r", function(d, i){ return circleRad + Math.log(d.size/bubble_factor)})
 	    .attr("cx", width / 2)
 	    .attr("cy", height / 2)
 	    .style("fill", function(d, i){ return color(d.type)})//d.group)})
@@ -250,7 +250,7 @@ d3.json(data_url, function(data){
 	    .force("y", d3.forceY().strength(0.2).y( function(d){ return y(d.step) } ))
 	    //.force("center", d3.forceCenter().x(width / 2).y(height / 2)) // Attraction to the center of the svg area
 	    .force("charge", d3.forceManyBody().strength(3)) // Nodes are attracted one each other of value is > 0
-	    .force("collide", d3.forceCollide().strength(1).radius(function(d, i) { return circleRad + d.size/bubble_factor}).iterations(1)); // Force that avoids circle overlapping
+	    .force("collide", d3.forceCollide().strength(1).radius(function(d, i) { return circleRad + Math.log(d.size/bubble_factor)}).iterations(1)); // Force that avoids circle overlapping
 	
 	// Apply these forces to the nodes and update their positions.
 	// Once the force algorithm is happy with positions ('alpha' value is low enough), simulations will stop.
@@ -344,10 +344,10 @@ d3.json(data_url, function(data){
 			return 'black';
 		    }
 		})
-;
+	    ;
 	
 	
 	
-    
+	
     });
     });

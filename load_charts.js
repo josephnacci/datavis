@@ -13,11 +13,12 @@ var barChartParams = {'width': 300,
 params = {
     title: "Consider x for yourself",
     bgcolor: "black",
-    num_type: "percent",
+    num_type: "money",
     "width": 700,
     "height": 300,
     "colorscheme": ["#7F00FF", "#aaa"],
-    fill_bar: 'nofill'
+    fill_bar: 'nofill',
+    sort: 'group_value'
 };
 
 
@@ -27,16 +28,17 @@ params = {
 //	   params
 //	   );
 //
-//dotPlot(
-//	   "http://localhost:8000/dotPlot.json",//app.naccix.io/zulily/age?persona=" + persona,
-//	   "#dotPlot",
-//	   params
-//	   );
+dotPlot(
+	   "http://localhost:8000/dotPlot.json",//app.naccix.io/zulily/age?persona=" + persona,
+	   "#dotPlot",
+	   params
+	   );
 //
 //
 
 var persona = "Most Valuable Shopper"
-journeyMap('https://app.naccix.io/zulily/step_journey?persona=' + persona, '#journey_map', {cutoff: 40, bubble_factor: 50, bgcolor: 'black'})
+    //journeyMap('https://app.naccix.io/zulily/step_journey?persona=' + persona, '#journey_map', {cutoff: 40, bubble_factor: 50, bgcolor: 'black'})
+    //journeyMap('http://localhost:8000/unicef_ref_time_journey.json', '#journey_map', {cutoff: 30, bubble_factor: 200, bgcolor: 'black'})
 
 //
 ////barChart("sales.csv", "#bar_chart", 500).fillChart("sales_2.csv", chartBase);

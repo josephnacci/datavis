@@ -4,6 +4,9 @@ var groupedBar = (function groupedBar(data, selector, params){
 	if (!(params.margin)){
 	    var margin = {top: 30, right: 30, bottom: 60, left: 40};
 	}
+	else{
+	    var margin = params.margin;
+	}
 
 	if ('width' in params){
 	    width = params.width
@@ -45,45 +48,53 @@ var groupedBar = (function groupedBar(data, selector, params){
 	.style("position", "absolute");
 
 
-	button_location = {left: -margin.left, top: 10}
-
-	var button_div = d3.select(selector).append("div")
-	.attr("class", "chart_transition")
-	.style("opacity", 1)
-	.style("background", "#aaa")
-	.style("position", "absolute");
-
-
 	d3.json(data, function(all_data) {
 		
+
+		button_location = {left: -margin.left, top: 10}
+		var button_selector = selector.slice(1, selector.length);		
+		var button_div = d3.select(selector).append("div")
+		    .attr("class", "chart_transition"+button_selector)
+		    .style("opacity", 1)
+		    .style("background", "#aaa")
+		    .style("position", "absolute");
+		
+		
+
+		
+		console.log(width, height);
+		
 		base_render(all_data, Object.keys(all_data['data'])[0]);
+
+
+
 
 
 		if (Object.keys(all_data['data']).length > 1){
 		    //base_render(all_data, Object.keys(data)[0]);
 		    
-		    button_div.html("<div id='buttons' style=';position: absolute; text-align: center;  width: 500px;  height: 50px;  padding: 0px;  font: 12px sans-serif;  border: 0px;'>" + 
-				    "<button id='"+Object.keys(all_data['data'])[0].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[0]+"</button>" + 
-				    "<button id='"+Object.keys(all_data['data'])[1].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[1]+"</button>" + 
+		    button_div.html("<div id='buttons"+button_selector+"' style=';position: absolute; text-align: center;  width: 500px;  height: 50px;  padding: 0px;  font: 12px sans-serif;  border: 0px;'>" + 
+				    "<button id='"+button_selector + Object.keys(all_data['data'])[0].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[0]+"</button>" + 
+				    "<button id='"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[1]+"</button>" + 
 				    " </div>")
 			.style("left", button_location.left)//(d3.event.pageX - 60) + "px")
 			.style("top", button_location.top)//(d3.event.pageY - 28) + "px")
 			.style("fill", "white");
 
-		    d3.select("#"+Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#99ccee')    
+		    d3.select("#"+button_selector + Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#99ccee')    
 
-		    d3.select("#"+Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd')    
+		    d3.select("#"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd')    
 
 
-		    d3.select("#"+Object.keys(all_data['data'])[0].replace(/\s+/g, ''))
+		    d3.select("#"+button_selector + Object.keys(all_data['data'])[0].replace(/\s+/g, ''))
 			.on("click", function(d, i) {
-				d3.select("#"+Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd')    
+				d3.select("#"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd')    
 				d3.select(this).style('background-color', '#99ccee');
 				base_render(all_data, Object.keys(all_data['data'])[0])
 				    });
-		    d3.select("#"+Object.keys(all_data['data'])[1].replace(/\s+/g, ''))
+		    d3.select("#"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, ''))
 			.on("click", function(d, i) {
-				d3.select("#"+Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#ddd')    
+				d3.select("#"+button_selector +Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#ddd')    
 				d3.select(this).style('background-color', '#99ccee');
 				base_render(all_data, Object.keys(all_data['data'])[1])
 				    });
@@ -370,8 +381,5 @@ var groupedBar = (function groupedBar(data, selector, params){
 		}	
 
 	    });
-	    	
-	
-	
     });
 

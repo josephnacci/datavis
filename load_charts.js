@@ -10,7 +10,7 @@ var barChartParams = {'width': 300,
 //barChartWindowParams['data_url'] =  "http://localhost:5000/zulily_spend"
 //barChartWindowParams = barChart().fillChart(barChartWindowParams);
 
-params = {
+bar_params = {
     title: "Consider x for yourself",
     bgcolor: "black",
     num_type: "money",
@@ -19,9 +19,17 @@ params = {
     "colorscheme": ["#7F00FF", "#aaa"],
     fill_bar: 'nofill',
     sort: 'group_value'
+
 };
 
-//var persona = "Most Valuable Shopper"
+var persona = "Most Valuable Shopper"
+var persona = "Carpe Diem Shopper"
+groupedBar(
+	   "https://app.naccix.io/zulily/hour_of_day?persona=" + persona,
+	   "#groupedBar",
+	   bar_params
+	   );
+
 //groupedBar(
 //	   "http://localhost:8000/test_multi_bar.json",//app.naccix.io/zulily/age?persona=" + persona,
 //	   "#groupedBar",
@@ -36,10 +44,23 @@ params = {
 //
 //
 
+//pieChart(
+//	"http://localhost:8000/test_multi_pie.json",//app.naccix.io/zulily/age?persona=" + persona,                                                            
+//	"#pie",
+//           params
+//	);
+params = {
+    bgcolor: 'black',
+    "width": 300,
+    "height": 300,
+    "colorscheme": ["#7F00FF", "#aaa"],
+  
+};
+
 pieChart(
-	"http://localhost:8000/test_multi_pie.json",//app.naccix.io/zulily/age?persona=" + persona,                                                            
+	"https://app.naccix.io/zulily/web_vs_app?persona=" + persona,                                                            
 	"#pie",
-           params
+	params
 	);
 
 

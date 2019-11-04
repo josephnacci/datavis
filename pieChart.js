@@ -1,5 +1,5 @@
 var pieChart = (function pieChart(data_url, selector, params){
-	var margin = {top: 150, right: 10, bottom: 10, left: 150};
+	var margin = {top: 30, right: 20, bottom: 10, left: 20};
 
         if ('width' in params){
             width = params.width - margin.left - margin.right;
@@ -30,7 +30,7 @@ var pieChart = (function pieChart(data_url, selector, params){
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform",
-	      "translate(" + margin.left + "," + margin.top + ")");
+	      "translate(" + width/2 + "," + height/2 + ")");
 
 	var color = d3.scaleOrdinal(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
@@ -47,29 +47,33 @@ var pieChart = (function pieChart(data_url, selector, params){
         .innerRadius(radius - 40);
 
 
-        button_location = {left: 10, top: 10}
-
-        var button_div = d3.select(selector).append("div")
-        .attr("class", "chart_transition")
-        .style("opacity", 1)
-        .style("background", "#aaa")
-        .style("position", "absolute");
-
 
 	d3.json(data_url, function(error, all_data) {
 		if (error) throw error;
 
 
 		console.log(all_data);
+		
+		button_location = {left: -50, top: height+10}
+		var button_selector = selector.slice(1,selector.length);
+		
+		var button_div = d3.select(selector).append("div")
+		    .attr("class", "chart_transition"+button_selector)
+		    .style("opacity", 1)
+		    .style("background", "#aaa")
+		    .style("position", "absolute");
+		
 
+		
+		
                 base_render(all_data, Object.keys(all_data['data'])[0]);
 
 
                 if (Object.keys(all_data['data']).length > 1){
 
-                    button_div.html("<div id='buttons' style=';position: absolute; text-align: center;  width: 500px;  height: 50px;  padding: 0px;  font: 12px sans-serif;  border: 0px;'>" +
-                                    "<button id='"+Object.keys(all_data['data'])[0].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[0]+"</button>" +
-                                    "<button id='"+Object.keys(all_data['data'])[1].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[1]+"</button>" +
+                    button_div.html("<div id='buttons_"+button_selector+"' style=';position: absolute; text-align: center;  width: 500px;  height: 50px;  padding: 0px;  font: 12px sans-serif;  border: 0px;'>" +
+                                    "<button id='"+button_selector+Object.keys(all_data['data'])[0].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[0]+"</button>" +
+                                    "<button id='"+button_selector+Object.keys(all_data['data'])[1].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[1]+"</button>" +
                                     " </div>")
                         .style("left", button_location.left)//(d3.event.pageX - 60) + "px")
 
@@ -77,20 +81,20 @@ var pieChart = (function pieChart(data_url, selector, params){
 
                         .style("fill", "white");
 
-                    d3.select("#"+Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#99ccee')
+                    d3.select("#"+button_selector + Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#99ccee')
 
-                        d3.select("#"+Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd')
+                        d3.select("#"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd')
 
 
-                        d3.select("#"+Object.keys(all_data['data'])[0].replace(/\s+/g, ''))
+                        d3.select("#"+button_selector+Object.keys(all_data['data'])[0].replace(/\s+/g, ''))
                         .on("click", function(d, i) {
-                                d3.select("#"+Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd')
+                                d3.select("#"+button_selector+Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd')
                                     d3.select(this).style('background-color', '#99ccee');
                                 base_render(all_data, Object.keys(all_data['data'])[0])
                                     });
-                    d3.select("#"+Object.keys(all_data['data'])[1].replace(/\s+/g, ''))
+                    d3.select("#"+button_selector+Object.keys(all_data['data'])[1].replace(/\s+/g, ''))
                         .on("click", function(d, i) {
-                                d3.select("#"+Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#ddd')
+                                d3.select("#"+button_selector+Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#ddd')
                                     d3.select(this).style('background-color', '#99ccee');
                                 base_render(all_data, Object.keys(all_data['data'])[1])
                                     });
@@ -104,12 +108,12 @@ var pieChart = (function pieChart(data_url, selector, params){
 		data = all_data['data'];
 		title = all_data['title'];
 
-
+		
 		if (primary_key){
-		    data = data[primary_key];
+		    data = data[primary_key][0];
 		}
 
-
+		console.log(data);
 
 		// set the color scale
 		var color = d3.scaleOrdinal()
@@ -138,8 +142,8 @@ var pieChart = (function pieChart(data_url, selector, params){
 
 		    if (params.bgcolor){
 			svg.append("rect")
-			.attr("x", -margin.left)
-			.attr("y", -margin.top)
+			.attr("x", -width/2)
+			.attr("y", -height/2)
 			.attr("width", "100%")
 			.attr("height", "100%")
 			.attr("fill", params.bgcolor);
@@ -157,7 +161,7 @@ var pieChart = (function pieChart(data_url, selector, params){
 			.attr('fill', function(d){ return(color(d.data.key)) })
 			.attr("stroke", "black")
 			.style("stroke-width", "2px")
-			.style("opacity", 0.7)
+			.style("opacity", 1)
 
 			// Now add the annotation. Use the centroid method to get the best coordinates
 			svg

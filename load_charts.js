@@ -21,22 +21,29 @@ params = {
     sort: 'group_value'
 };
 
-
+//var persona = "Most Valuable Shopper"
 //groupedBar(
-//	   "http://localhost:8000/groupedBar.json",//app.naccix.io/zulily/age?persona=" + persona,
+//	   "http://localhost:8000/test_multi_bar.json",//app.naccix.io/zulily/age?persona=" + persona,
 //	   "#groupedBar",
 //	   params
 //	   );
-//
-dotPlot(
-	   "http://localhost:8000/dotPlot.json",//app.naccix.io/zulily/age?persona=" + persona,
-	   "#dotPlot",
-	   params
-	   );
+
+//dotPlot(
+//	   "http://localhost:8000/test_multi_dotPlot.js",//app.naccix.io/zulily/age?persona=" + persona,
+//	   "#dotPlot",
+//	   params
+//	   );
 //
 //
 
-var persona = "Most Valuable Shopper"
+pieChart(
+	"http://localhost:8000/test_multi_pie.json",//app.naccix.io/zulily/age?persona=" + persona,                                                            
+	"#pie",
+           params
+	);
+
+
+
     //journeyMap('https://app.naccix.io/zulily/step_journey?persona=' + persona, '#journey_map', {cutoff: 40, bubble_factor: 50, bgcolor: 'black'})
     //journeyMap('http://localhost:8000/unicef_ref_time_journey.json', '#journey_map', {cutoff: 30, bubble_factor: 200, bgcolor: 'black'})
 

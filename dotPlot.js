@@ -46,7 +46,14 @@ var dotPlot = (function dotPlot(url, selector, params){
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 	
 	
-	
+	button_location = {left: 10, top: 10}
+
+        var button_div = d3.select(selector).append("div")
+        .attr("class", "chart_transition")
+        .style("opacity", 1)
+        .style("background", "#aaa")
+        .style("position", "absolute");
+
 	
 	d3.json(url, function(error, all_data) {
 
@@ -57,13 +64,65 @@ var dotPlot = (function dotPlot(url, selector, params){
 
 		// in this case, i know it's out of 100 because it's percents.
 
-		data = all_data['data'];
-		xlabel = all_data['xlabel'];
-		ylabel = all_data['ylabel'];
-		title = all_data['title'];
-		dot_highlight = all_data['highlight'];
-		group_name = all_data['group_name'];
-		other_name = all_data['other_name'];
+		console.log(all_data);
+                base_render(all_data, Object.keys(all_data['data'])[0]);
+
+
+                if (Object.keys(all_data['data']).length > 1){
+                    //base_render(all_data, Object.keys(data)[0]);                                                                                                  
+
+                    button_div.html("<div id='buttons' style=';position: absolute; text-align: center;  width: 500px;  height: 50px;  padding: 0px;  font: 12px sans-serif;  border: 0px;'>" +
+                                    "<button id='"+Object.keys(all_data['data'])[0].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[0]+"</button>" +
+                                    "<button id='"+Object.keys(all_data['data'])[1].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[1]+"</button>" +
+                                    " </div>")
+                        .style("left", button_location.left)//(d3.event.pageX - 60) + "px")                                                                         
+                        .style("top", button_location.top)//(d3.event.pageY - 28) + "px")                                                                           
+                        .style("fill", "white");
+
+                    d3.select("#"+Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#99ccee')
+
+			d3.select("#"+Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd')
+
+
+			d3.select("#"+Object.keys(all_data['data'])[0].replace(/\s+/g, ''))
+			.on("click", function(d, i) {
+                                d3.select("#"+Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd')
+				    d3.select(this).style('background-color', '#99ccee');
+                                base_render(all_data, Object.keys(all_data['data'])[0])
+                                    });
+                    d3.select("#"+Object.keys(all_data['data'])[1].replace(/\s+/g, ''))
+                        .on("click", function(d, i) {
+				d3.select("#"+Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#ddd')
+				    d3.select(this).style('background-color', '#99ccee');
+                                base_render(all_data, Object.keys(all_data['data'])[1])
+                                    });
+
+
+                }
+		else{
+
+                    console.log('hi');
+
+                }
+		function base_render(all_data, primary_key){
+
+
+		    data = all_data['data'];
+		    xlabel = all_data['xlabel'];
+		    ylabel = all_data['ylabel'];
+		    title = all_data['title'];
+		    dot_highlight = all_data['highlight'];
+		    group_name = all_data['group_name'];
+		    other_name = all_data['other_name'];
+
+
+                    if (primary_key){
+                        data = data[primary_key];
+                    }
+
+
+
+
 		if (params.sort == 'group_value'){
 		    data = data.sort(function(x, y){
 			    return d3.descending(+x.group_score, +y.group_score);
@@ -373,34 +432,35 @@ var dotPlot = (function dotPlot(url, selector, params){
 
 
 		
-	    });
-	function wrap(text, width) {
-	    console.log(text, width);
-	    text.each(function() {
-		    var text = d3.select(this),
-			words = text.text().split(/\s+/).reverse(),
-			word,
-			line = [],
-			lineNumber = 0,
-			lineHeight = 1.1, // ems
-			y = text.attr("y"),
-			dy = parseFloat(text.attr("dy")),
-			dx = -0.3,
-			tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em").attr("dx", dx + "em").style('fill', 'white')
-			while (word = words.pop()) {
-			    console.log(word);
-			    line.push(word)
-			    tspan.text(line.join(" "))
-			    if (tspan.node().getComputedTextLength() > width) {
-				line.pop()
-				tspan.text(line.join(" "))
-				line = [word]
-				tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy",  ++lineNumber * lineHeight + "em").attr("dx", dx + "em").text(word).style('fill', 'white')
-			    }
-			}
-		})
-		}
+		};
+		function wrap(text, width) {
 
+		    text.each(function() {
+			    var text = d3.select(this),
+				words = text.text().split(/\s+/).reverse(),
+				word,
+				line = [],
+				lineNumber = 0,
+				lineHeight = 1.1, // ems
+				y = text.attr("y"),
+				dy = parseFloat(text.attr("dy")),
+				dx = -0.3,
+				tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em").attr("dx", dx + "em").style('fill', 'white')
+				while (word = words.pop()) {
+				    line.push(word)
+				    tspan.text(line.join(" "))
+				    if (tspan.node().getComputedTextLength() > width) {
+					line.pop()
+					    tspan.text(line.join(" "))
+					    line = [word]
+					    tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy",  ++lineNumber * lineHeight + "em").attr("dx", dx + "em").text(word).style('fill', 'white')
+					    }
+				}
+			})
+			}
+	    })
+    
+	    
 
 
 

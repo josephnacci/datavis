@@ -15,7 +15,7 @@ bar_params = {
     bgcolor: "black",
     num_type: "money",
     "width": 700,
-    "height": 300,
+    "height": 400,
     "colorscheme": ["#7F00FF", "#aaa"],
     fill_bar: 'nofill',
     sort: 'group_value'

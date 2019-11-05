@@ -9,10 +9,10 @@ var pieChart = (function pieChart(data_url, selector, params){
         }
 
         if ('height' in params){
-            height = params.height - margin.top - margin.bottom;//margin.top - margin.bottom;
+            pie_height = params.height - margin.top - margin.bottom;//margin.top - margin.bottom;
         }
         else{
-            height = 400 - margin.top - margin.bottom;//300 - margin.top - margin.bottom;
+            pie_height = 400 - margin.top - margin.bottom;//300 - margin.top - margin.bottom;
         }
 
 
@@ -20,17 +20,18 @@ var pieChart = (function pieChart(data_url, selector, params){
 	// set the dimensions and margins of the graph
 
 
-	var radius = Math.min(width, height) / 2;
+	var radius = Math.min(width, pie_height) / 2;
 
 	d3.selectAll(selector + " > *").remove();
 
 	var svg = d3.select(selector)
         .append("svg")
+	.attr("id", selector.slice(1,selector.length))
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("height", pie_height + margin.top + margin.bottom)
         .append("g")
         .attr("transform",
-	      "translate(" + width/2 + "," + height/2 + ")");
+	      "translate(" + width/2 + "," + pie_height/2 + ")");
 
 	var color = d3.scaleOrdinal(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
@@ -54,14 +55,14 @@ var pieChart = (function pieChart(data_url, selector, params){
 
 		console.log(all_data);
 		
-		button_location = {left: -50, top: height+10}
+		button_location = {left:-50, top: 10}
 		var button_selector = selector.slice(1,selector.length);
 		
 		var button_div = d3.select(selector).append("div")
 		    .attr("class", "chart_transition"+button_selector)
 		    .style("opacity", 1)
 		    .style("background", "#aaa")
-		    .style("position", "absolute");
+		    .style("position", "relative");
 		
 
 		
@@ -143,7 +144,7 @@ var pieChart = (function pieChart(data_url, selector, params){
 		    if (params.bgcolor){
 			svg.append("rect")
 			.attr("x", -width/2)
-			.attr("y", -height/2)
+			.attr("y", -pie_height/2)
 			.attr("width", "100%")
 			.attr("height", "100%")
 			.attr("fill", params.bgcolor);

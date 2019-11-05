@@ -35,6 +35,7 @@ var groupedBar = (function groupedBar(data, selector, params){
 	d3.selectAll(selector + " > *").remove();
 
 	var svg = d3.select(selector).append("svg")
+	.attr("id", selector.slice(1,selector.length))
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
 	.append("g")
@@ -57,7 +58,7 @@ var groupedBar = (function groupedBar(data, selector, params){
 		    .attr("class", "chart_transition"+button_selector)
 		    .style("opacity", 1)
 		    .style("background", "#aaa")
-		    .style("position", "absolute");
+		    .style("position", "relative");
 		
 		
 

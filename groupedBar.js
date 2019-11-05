@@ -52,7 +52,7 @@ var groupedBar = (function groupedBar(data, selector, params){
 	d3.json(data, function(all_data) {
 		
 
-		button_location = {left: -margin.left, top: 10}
+		button_location = {left: -margin.left, top: 0}
 		var button_selector = selector.slice(1, selector.length);		
 		var button_div = d3.select(selector).append("div")
 		    .attr("class", "chart_transition"+button_selector)

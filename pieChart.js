@@ -55,7 +55,7 @@ var pieChart = (function pieChart(data_url, selector, params){
 
 		console.log(all_data);
 		
-		button_location = {left:-50, top: 10}
+		button_location = {left:-50, top: 0}
 		var button_selector = selector.slice(1,selector.length);
 		
 		var button_div = d3.select(selector).append("div")

@@ -46,15 +46,6 @@ var dotPlot = (function dotPlot(url, selector, params){
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 	
 	
-	button_location = {left: 10, top: 10}
-
-        var button_div = d3.select(selector).append("div")
-        .attr("class", "chart_transition")
-        .style("opacity", 1)
-        .style("background", "#aaa")
-        .style("position", "absolute");
-
-	
 	d3.json(url, function(error, all_data) {
 
 		/////////////////////////DOTS
@@ -63,37 +54,46 @@ var dotPlot = (function dotPlot(url, selector, params){
 		//    });
 
 		// in this case, i know it's out of 100 because it's percents.
-
 		console.log(all_data);
-                base_render(all_data, Object.keys(all_data['data'])[0]);
+		button_location = {left: 10, top: 0}
+		var button_selector = selector.slice(1,selector.length);
+
+		var button_div = d3.select(selector).append("div")
+		    .attr("class", "chart_transition")
+		    .style("opacity", 1)
+		    .style("background", "#aaa")
+		    .style("position", "relative");
+		
+	
+		base_render(all_data, Object.keys(all_data['data'])[0]);
 
 
                 if (Object.keys(all_data['data']).length > 1){
                     //base_render(all_data, Object.keys(data)[0]);                                                                                                  
-
-                    button_div.html("<div id='buttons' style=';position: absolute; text-align: center;  width: 500px;  height: 50px;  padding: 0px;  font: 12px sans-serif;  border: 0px;'>" +
-                                    "<button id='"+Object.keys(all_data['data'])[0].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[0]+"</button>" +
-                                    "<button id='"+Object.keys(all_data['data'])[1].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[1]+"</button>" +
+		    
+                    button_div.html("<div id='buttons"+button_selector+"' style=';position: absolute; text-align: center;  width: 500px;  height: 50px;  padding: 0px;  font: 12px sans-serif;  border: 0px;'>" +
+                                    "<button id='"+button_selector + Object.keys(all_data['data'])[0].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[0]+"</button>" +
+                                    "<button id='"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[1]+"</button>" +
                                     " </div>")
                         .style("left", button_location.left)//(d3.event.pageX - 60) + "px")                                                                         
                         .style("top", button_location.top)//(d3.event.pageY - 28) + "px")                                                                           
                         .style("fill", "white");
-
-                    d3.select("#"+Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#99ccee')
-
-			d3.select("#"+Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd')
-
-
-			d3.select("#"+Object.keys(all_data['data'])[0].replace(/\s+/g, ''))
+		    
+                    d3.select("#"+button_selector + Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#99ccee')
+			
+			d3.select("#"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd')
+			
+			
+			d3.select("#"+button_selector + Object.keys(all_data['data'])[0].replace(/\s+/g, ''))
 			.on("click", function(d, i) {
-                                d3.select("#"+Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd')
-				    d3.select(this).style('background-color', '#99ccee');
+                                d3.select("#"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd');
+				d3.select(this).style('background-color', '#99ccee');
                                 base_render(all_data, Object.keys(all_data['data'])[0])
                                     });
-                    d3.select("#"+Object.keys(all_data['data'])[1].replace(/\s+/g, ''))
+                    d3.select("#"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, ''))
                         .on("click", function(d, i) {
-				d3.select("#"+Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#ddd')
-				    d3.select(this).style('background-color', '#99ccee');
+				d3.select("#"+button_selector + Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#ddd');
+				d3.select(this).style('background-color', '#99ccee');
                                 base_render(all_data, Object.keys(all_data['data'])[1])
                                     });
 

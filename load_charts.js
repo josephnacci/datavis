@@ -22,8 +22,8 @@ bar_params = {
 
 };
 
-var persona = "Most Valuable Shopper"
-var persona = "Carpe Diem Shopper"
+var persona = "Most Valuable Shopper";
+var persona = "Carpe Diem Shopper";
 groupedBar(
 	   "https://app.naccix.io/zulily/hour_of_day?persona=" + persona,
 	   "#groupedBar",
@@ -31,7 +31,7 @@ groupedBar(
 	   );
 
 //groupedBar(
-//	   "http://localhost:8000/test_multi_bar.json",//app.naccix.io/zulily/age?persona=" + persona,
+	   //	   "http://localhost:8000/test_multi_bar.json",//app.naccix.io/zulily/age?persona=" + persona,
 //	   "#groupedBar",
 //	   params
 //	   );
@@ -41,6 +41,16 @@ groupedBar(
 //	   "#dotPlot",
 //	   params
 //	   );
+
+
+
+
+dotPlot(
+	   "https://app.naccix.io/zulily/attitudes?persona=" + persona,
+	   "#dotPlot",
+	   { num_type: "percent", bgcolor: "black", "colorscheme": ["#7F00FF", "#aaa"],  height: 400, sort: 'outgroup_value'}
+
+	   );
 //
 //
 

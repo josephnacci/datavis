@@ -444,8 +444,23 @@ var dotPlot = (function dotPlot(url, selector, params){
 				lineHeight = 1.1, // ems
 				y = text.attr("y"),
 				dy = parseFloat(text.attr("dy")),
-				dx = -0.3,
-				tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em").attr("dx", dx + "em").style('fill', 'white')
+				dx = -0.9,
+				tspan = text.text(null)
+				.append("tspan")
+				.attr("x", 0).attr("y", y)
+				.attr("dy", dy + "em")
+				.attr("dx", dx + "em")
+				.style('fill', function(d){
+					if (params.bgcolor){
+					    if (params.bgcolor == 'black'){
+						return 'white';
+					    }
+					}
+					else{
+					    return 'black'
+					}
+				    });
+
 				while (word = words.pop()) {
 				    line.push(word)
 				    tspan.text(line.join(" "))
@@ -453,8 +468,23 @@ var dotPlot = (function dotPlot(url, selector, params){
 					line.pop()
 					    tspan.text(line.join(" "))
 					    line = [word]
-					    tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy",  ++lineNumber * lineHeight + "em").attr("dx", dx + "em").text(word).style('fill', 'white')
-					    }
+					    tspan = text.append("tspan")
+					    .attr("x", 0)
+					    .attr("y", y)
+					    .attr("dy",  ++lineNumber * lineHeight + "em")
+					    .attr("dx", dx + "em")
+					    .text(word)
+					    .style('fill', function(d){
+						    if (params.bgcolor){
+							if (params.bgcolor == 'black'){
+							    return 'white';
+							}
+						    }
+						    else{
+							return 'black'
+						    }
+						});
+				    }
 				}
 			})
 			}

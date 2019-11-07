@@ -48,7 +48,7 @@ groupedBar(
 dotPlot(
 	   "https://app.naccix.io/zulily/attitudes?persona=" + persona,
 	   "#dotPlot",
-	   { num_type: "percent", bgcolor: "black", "colorscheme": ["#7F00FF", "#aaa"],  height: 400, sort: 'outgroup_value'}
+	   { num_type: "percent", bgcolor: "white", "colorscheme": ["#7F00FF", "#aaa"],  height: 400, sort: 'outgroup_value'}
 
 	   );
 //

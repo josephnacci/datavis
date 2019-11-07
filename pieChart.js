@@ -27,8 +27,8 @@ var pieChart = (function pieChart(data_url, selector, params){
 	var svg = d3.select(selector)
         .append("svg")
 	.attr("id", selector.slice(1,selector.length))
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", pie_height + margin.top + margin.bottom)
+        .attr("width", width )
+        .attr("height", pie_height )
         .append("g")
         .attr("transform",
 	      "translate(" + width/2 + "," + pie_height/2 + ")");

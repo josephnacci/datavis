@@ -140,7 +140,7 @@ var pieChart = (function pieChart(data_url, selector, params){
 		    var arcGenerator = d3.arc()
 		    .innerRadius(0)
 		    .outerRadius(radius)
-
+		    
 		    if (params.bgcolor){
 			svg.append("rect")
 			.attr("x", -width/2)
@@ -175,7 +175,7 @@ var pieChart = (function pieChart(data_url, selector, params){
 			.style("text-anchor", "middle")
 			.style("font-size", 15)
 
-
+			//svg.exit().remove();
 
 
 			};

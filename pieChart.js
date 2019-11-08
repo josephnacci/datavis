@@ -37,7 +37,7 @@ var pieChart = (function pieChart(data_url, selector, params){
 
 	var pie = d3.pie()
         .sort(null)
-        .value(function(d) { console.log(d.data); return d.data; });
+        .value(function(d) {  return d.data; });
 
 	var path = d3.arc()
         .outerRadius(radius - 10)
@@ -53,7 +53,7 @@ var pieChart = (function pieChart(data_url, selector, params){
 		if (error) throw error;
 
 
-		console.log(all_data);
+
 		
 		button_location = {left:-50, top: 0}
 		var button_selector = selector.slice(1,selector.length);
@@ -114,7 +114,7 @@ var pieChart = (function pieChart(data_url, selector, params){
 		    data = data[primary_key][0];
 		}
 
-		console.log(data);
+
 
 		// set the color scale
 		var color = d3.scaleOrdinal()

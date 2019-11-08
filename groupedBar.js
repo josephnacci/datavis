@@ -63,7 +63,6 @@ var groupedBar = (function groupedBar(data, selector, params){
 		
 
 		
-		console.log(width, height);
 		
 		base_render(all_data, Object.keys(all_data['data'])[0]);
 
@@ -102,11 +101,7 @@ var groupedBar = (function groupedBar(data, selector, params){
 
 		    
 		}
-		else{
 
-		    console.log('hi');
-		    
-		}
 		function base_render(all_data, primary_key){
 		    
 		    xlabel = all_data['xlabel'];
@@ -120,7 +115,7 @@ var groupedBar = (function groupedBar(data, selector, params){
 		    }
 			
 
-		    console.log(xlabel, title, ylabel, highlight, data);
+
 
 		    factor = 1;
 		    if (params.num_type == 'percent'){
@@ -226,7 +221,7 @@ var groupedBar = (function groupedBar(data, selector, params){
 			    .style("left", width-margin.right - 270)//(d3.event.pageX - 60) + "px")
 			    .style("top", margin.top+50)//(d3.event.pageY - 28) + "px")
 			    .style("fill", "white");
-			console.log('hi');
+
 		    }
 		    
 		    function mouseOut(){ 

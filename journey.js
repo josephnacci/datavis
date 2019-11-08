@@ -95,8 +95,7 @@ var journeyMap = (function journeyMap(data_url, selector, params){
 	for (i = 0; i < num_steps; i++){
 	    y_range.push(50 + 0.9*height/num_steps * i)//* parseInt(i/3));
 	};
-	console.log(x_range);
-	console.log(y_range);
+
 
 
 	var x = d3.scaleOrdinal()
@@ -120,7 +119,7 @@ var journeyMap = (function journeyMap(data_url, selector, params){
 	    .enter()
             .append("circle")
             .attr("r", 60)
-            .attr("cx", function(d){console.log(d); return x(d);})
+            .attr("cx", function(d){return x(d);})
             .attr("cy", function(d){ return y(d);})
 	    .style("stroke", function(){
 		    if (params.bgcolor){
@@ -208,7 +207,7 @@ var journeyMap = (function journeyMap(data_url, selector, params){
 		    linesGrid.attr('opacity', function(dl){
 			    
 			    if (d.name == dl.name){
-				console.log(d.name, dl.name)
+
 				return 1;
 				//linesGrid._groups[0][i].attributes['opacity'] = 1;//('opacity', 1);
 				

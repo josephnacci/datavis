@@ -54,7 +54,7 @@ var dotPlot = (function dotPlot(url, selector, params){
 		//    });
 
 		// in this case, i know it's out of 100 because it's percents.
-		console.log(all_data);
+
 		button_location = {left: 10, top: 0}
 		var button_selector = selector.slice(1,selector.length);
 
@@ -99,11 +99,7 @@ var dotPlot = (function dotPlot(url, selector, params){
 
 
                 }
-		else{
 
-                    console.log('hi');
-
-                }
 		function base_render(all_data, primary_key){
 
 

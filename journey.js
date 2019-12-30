@@ -30,8 +30,8 @@ var journeyMap = (function journeyMap(data_url, selector, params){
 	d3.json(data_url, function(data){
 		
 		// A scale that gives a X target position for each group
-		//console.log(data);
-		//data = data['Carpe Diem Shopper'];
+		console.log(data);
+		data = data['all'];
 		
 		
 		if (params.bgcolor){
@@ -50,7 +50,7 @@ var journeyMap = (function journeyMap(data_url, selector, params){
 
 
 	var steps = d3.map(data, function(d){return  +d.step;}).keys();
-
+	steps = steps.sort();
 
         var num_steps = steps.length;
 	
@@ -133,7 +133,7 @@ var journeyMap = (function journeyMap(data_url, selector, params){
 		})//"gray")
 	    .style("fill", "transparent");
 	
-	var interval = 60;
+	var interval = 15;
 	var time_step = interval/steps.length;
 
 	var circle_text = svg.append("g")

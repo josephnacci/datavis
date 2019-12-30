@@ -24,11 +24,12 @@ bar_params = {
 
 var persona = "Most Valuable Shopper";
 var persona = "Carpe Diem Shopper";
-groupedBar(
-	   "https://app.naccix.io/zulily/hour_of_day?persona=" + persona,
-	   "#groupedBar",
-	   bar_params
-	   );
+//groupedBar(
+//	   //"https://app.naccix.io/zulily/hour_of_day?persona=" + persona,
+//	   "http://localhost:8000/groupedBar.json",
+//	   "#groupedBar",
+//	   bar_params
+//	   );
 
 //groupedBar(
 	   //	   "http://localhost:8000/test_multi_bar.json",//app.naccix.io/zulily/age?persona=" + persona,
@@ -36,47 +37,46 @@ groupedBar(
 //	   params
 //	   );
 
-//dotPlot(
-//	   "http://localhost:8000/test_multi_dotPlot.js",//app.naccix.io/zulily/age?persona=" + persona,
-//	   "#dotPlot",
-//	   params
-//	   );
-
-
-
-
 dotPlot(
-	   "https://app.naccix.io/zulily/attitudes?persona=" + persona,
+	   "http://localhost:8000/pandora_age.json",//app.naccix.io/zulily/age?persona=" + persona,
 	   "#dotPlot",
-	   { num_type: "percent", bgcolor: "black", "colorscheme": ["#7F00FF", "#aaa"],  height: 400, sort: 'outgroup_value'}
-
+	   { num_type: "percent", bgcolor: "white", "colorscheme": ["#000", "#aaa"],  height: 400, width: 600, sort: 'none'}
 	   );
-//
-//
 
+
+
+
+//dotPlot(
+//	   "https://app.naccix.io/zulily/attitudes?persona=" + persona,
+//	   "#dotPlot",
+//	   { num_type: "percent", bgcolor: "black", "colorscheme": ["#7F00FF", "#aaa"],  height: 400, sort: 'outgroup_value'}
+//
+//	   );
+////
+////
+//
+////pieChart(
+////	"http://localhost:8000/test_multi_pie.json",//app.naccix.io/zulily/age?persona=" + persona,                                                            
+////	"#pie",
+////           params
+////	);
+//params = {
+//    bgcolor: 'black',
+//    "width": 300,
+//    "height": 300,
+//    "colorscheme": ["#7F00FF", "#aaa"],
+//  
+//};
+//
 //pieChart(
-//	"http://localhost:8000/test_multi_pie.json",//app.naccix.io/zulily/age?persona=" + persona,                                                            
+//	"https://app.naccix.io/zulily/web_vs_app?persona=" + persona,                                                            
 //	"#pie",
-//           params
+//	params
 //	);
-params = {
-    bgcolor: 'black',
-    "width": 300,
-    "height": 300,
-    "colorscheme": ["#7F00FF", "#aaa"],
-  
-};
-
-pieChart(
-	"https://app.naccix.io/zulily/web_vs_app?persona=" + persona,                                                            
-	"#pie",
-	params
-	);
 
 
-
-    //journeyMap('https://app.naccix.io/zulily/step_journey?persona=' + persona, '#journey_map', {cutoff: 40, bubble_factor: 50, bgcolor: 'black'})
-    //journeyMap('http://localhost:8000/unicef_ref_time_journey.json', '#journey_map', {cutoff: 30, bubble_factor: 200, bgcolor: 'black'})
+//journeyMap('https://app.naccix.io/zulily/step_journey?persona=' + persona, '#journey_map', {cutoff: 40, bubble_factor: 50, bgcolor: 'black'})
+//journeyMap('http://localhost:8000/unicef_ref_time_journey.json', '#journey_map', {cutoff: 8, bubble_factor: 5, bgcolor: 'black'})
 
 //
 ////barChart("sales.csv", "#bar_chart", 500).fillChart("sales_2.csv", chartBase);

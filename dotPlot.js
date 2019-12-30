@@ -44,153 +44,155 @@ var dotPlot = (function dotPlot(url, selector, params){
         .attr("height", height_dot + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-	
-	
+
+
 	d3.json(url, function(error, all_data) {
 
-		/////////////////////////DOTS
-		//dot_data.sort(function(a, b) {
-		//return d3.descending(+a.year2015, +b.year2015);
-		//    });
+	    /////////////////////////DOTS
+	    //dot_data.sort(function(a, b) {
+	    //return d3.descending(+a.year2015, +b.year2015);
+	    //    });
+	    
+	    // in this case, i know it's out of 100 because it's percents.
+	    
+	    button_location = {left: 10, top: 0}
+	    var button_selector = selector.slice(1,selector.length);
+	    
+	    var button_div = d3.select(selector).append("div")
+	    .attr("class", "chart_transition")
+	    .style("opacity", 1)
+	    .style("background", "#aaa")
+	    .style("position", "relative");
+	    
 
-		// in this case, i know it's out of 100 because it's percents.
+	    console.log(error, all_data);
 
-		button_location = {left: 10, top: 0}
-		var button_selector = selector.slice(1,selector.length);
-
-		var button_div = d3.select(selector).append("div")
-		    .attr("class", "chart_transition")
-		    .style("opacity", 1)
-		    .style("background", "#aaa")
-		    .style("position", "relative");
+	    base_render(all_data, Object.keys(all_data['data'])[0]);
+	    
+	    
+	    if (Object.keys(all_data['data']).length > 1){
+		//base_render(all_data, Object.keys(data)[0]);                                                                                                  
 		
-	
-		base_render(all_data, Object.keys(all_data['data'])[0]);
-
-
-                if (Object.keys(all_data['data']).length > 1){
-                    //base_render(all_data, Object.keys(data)[0]);                                                                                                  
+		button_div.html("<div id='buttons"+button_selector+"' style=';position: absolute; text-align: center;  width: 500px;  height: 50px;  padding: 0px;  font: 12px sans-serif;  border: 0px;'>" +
+				"<button id='"+button_selector + Object.keys(all_data['data'])[0].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[0]+"</button>" +
+				"<button id='"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[1]+"</button>" +
+				" </div>")
+		    .style("left", button_location.left)//(d3.event.pageX - 60) + "px")                                                                         
+		    .style("top", button_location.top)//(d3.event.pageY - 28) + "px")                                                                           
+		    .style("fill", "white");
+		
+		d3.select("#"+button_selector + Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#99ccee')
 		    
-                    button_div.html("<div id='buttons"+button_selector+"' style=';position: absolute; text-align: center;  width: 500px;  height: 50px;  padding: 0px;  font: 12px sans-serif;  border: 0px;'>" +
-                                    "<button id='"+button_selector + Object.keys(all_data['data'])[0].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[0]+"</button>" +
-                                    "<button id='"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, '') +"'>"+ Object.keys(all_data['data'])[1]+"</button>" +
-                                    " </div>")
-                        .style("left", button_location.left)//(d3.event.pageX - 60) + "px")                                                                         
-                        .style("top", button_location.top)//(d3.event.pageY - 28) + "px")                                                                           
-                        .style("fill", "white");
-		    
-                    d3.select("#"+button_selector + Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#99ccee')
-			
-			d3.select("#"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd')
-			
-			
-			d3.select("#"+button_selector + Object.keys(all_data['data'])[0].replace(/\s+/g, ''))
-			.on("click", function(d, i) {
-                                d3.select("#"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd');
-				d3.select(this).style('background-color', '#99ccee');
-                                base_render(all_data, Object.keys(all_data['data'])[0])
-                                    });
-                    d3.select("#"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, ''))
-                        .on("click", function(d, i) {
-				d3.select("#"+button_selector + Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#ddd');
-				d3.select(this).style('background-color', '#99ccee');
-                                base_render(all_data, Object.keys(all_data['data'])[1])
-                                    });
-
-
-                }
-
-		function base_render(all_data, primary_key){
-
-
-		    data = all_data['data'];
-		    xlabel = all_data['xlabel'];
-		    ylabel = all_data['ylabel'];
-		    title = all_data['title'];
-		    dot_highlight = all_data['highlight'];
-		    group_name = all_data['group_name'];
-		    other_name = all_data['other_name'];
-
-
-                    if (primary_key){
-                        data = data[primary_key];
-                    }
-
-
-
-
-		    if (params.sort == 'group_value'){
-			data = data.sort(function(x, y){
-				return d3.descending(+x.group_score, +y.group_score);
-			    });
-		    }
-		    else if (params.sort == 'outgroup_value'){
-			data = data.sort(function(x, y){
-				return d3.descending(+x.non_group_score, +y.non_group_score);
-			    });
-		    }
-		    else{
-			data = data;
-		    }
+		    d3.select("#"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd')
 		    
 		    
-		    
-		    
-		    
-		    if (params.num_type == "percent") {
-			var factor = 100;
-		    }
-		    else {
-			var factor = 1;
-		    }
-		    
-		    widthScale_dot.domain([ d3.min(data, function(d) {return d3.min([d.group_score, d.non_group_score]);})*0.9*factor
-					    , d3.max(data, function(d) {return d3.max([d.group_score, d.non_group_score]);})*1.2*factor ] );
-		    
-		    // js map: will make a new array out of all the d.name fields
-		    heightScale_dot.domain(data.map(function(d) { return d.question.trim(); } ))
-			.rangeRound([0, height_dot-10]);//width - margin.right])                                                                                                   
-		    
-		    
-		    yAxis_dot.domain(data.map(function(d) { return d.question.trim(); } ))
-			.rangeRound([0, height_dot-10]);//width - margin.right])                                                                                                                  
-		    
-		    
-		    if (params.bgcolor){
-			svg.append("rect")  
-			    .attr("x", -margin.left)
-			    .attr("y", -margin.top)
-			    .attr("width", "100%")
-			    .attr("height", "100%")
-			    .attr("fill", params.bgcolor);
-		    }
-		    
-		    // Make the faint lines from y labels to highest dot
-		    
-		    var linesGrid = svg.append("g").selectAll("g")//svg.selectAll("lines.grid")
-			.data(data)
+		    d3.select("#"+button_selector + Object.keys(all_data['data'])[0].replace(/\s+/g, ''))
+		    .on("click", function(d, i) {
+			    d3.select("#"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, '')).style('background-color', '#ddd');
+			    d3.select(this).style('background-color', '#99ccee');
+			    base_render(all_data, Object.keys(all_data['data'])[0])
+				});
+		d3.select("#"+button_selector + Object.keys(all_data['data'])[1].replace(/\s+/g, ''))
+		    .on("click", function(d, i) {
+			    d3.select("#"+button_selector + Object.keys(all_data['data'])[0].replace(/\s+/g, '')).style('background-color', '#ddd');
+			    d3.select(this).style('background-color', '#99ccee');
+			    base_render(all_data, Object.keys(all_data['data'])[1])
+				});
+		
+		
+	    }
+	    
+	    function base_render(all_data, primary_key){
+		
+		
+		data = all_data['data'];
+		xlabel = all_data['xlabel'];
+		ylabel = all_data['ylabel'];
+		title = all_data['title'];
+		dot_highlight = all_data['highlight'];
+		group_name = all_data['group_name'];
+		other_name = all_data['other_name'];
+		
+		
+		if (primary_key){
+		    data = data[primary_key];
+		}
+		
+		console.log(data)
+		
+		
+		if (params.sort == 'group_value'){
+		    data = data.sort(function(x, y){
+			    return d3.descending(+x.group_score, +y.group_score);
+			});
+		}
+		else if (params.sort == 'outgroup_value'){
+		    data = data.sort(function(x, y){
+			    return d3.descending(+x.non_group_score, +y.non_group_score);
+			});
+		}
+		else{
+		    data = data;
+		}
+		
+		
+		
+		
+		
+		if (params.num_type == "percent") {
+		    var factor = 100;
+		}
+		else {
+		    var factor = 1;
+		}
+		
+		widthScale_dot.domain([ d3.min(data, function(d) {return d3.min([d.group_score, d.non_group_score]);})*0.9*factor
+					, d3.max(data, function(d) {return d3.max([d.group_score, d.non_group_score]);})*1.2*factor ] );
+		
+		// js map: will make a new array out of all the d.name fields
+		heightScale_dot.domain(data.map(function(d) { return d.question.trim(); } ))
+		.rangeRound([0, height_dot-10]);//width - margin.right])                                                                                                   
+		
+		
+		yAxis_dot.domain(data.map(function(d) { return d.question.trim(); } ))
+		.rangeRound([0, height_dot-10]);//width - margin.right])                                                                                                                  
+		
+		
+		if (params.bgcolor){
+		    svg.append("rect")  
+			.attr("x", -margin.left)
+			.attr("y", -margin.top)
+			.attr("width", "100%")
+			.attr("height", "100%")
+			.attr("fill", params.bgcolor);
+		}
+		
+		// Make the faint lines from y labels to highest dot
+		
+		var linesGrid = svg.append("g").selectAll("g")//svg.selectAll("lines.grid")
+		.data(data)
 			.enter()
-			.append("line");
-		    
-		    linesGrid.attr("class", "grid")
-			.attr("x1", margin.left)
-			.attr("y1", function(d) {
-				//console.log(d.question, heightScale_dot(d.question), console.log(heightScale_dot.bandwidth()));
-				return heightScale_dot(d.question.trim());// + heightScale_dot.bandwidth();//rangeBand()/2;
-			    })
-			.attr("x2", function(d) {
-				return d3.max([margin.left + widthScale_dot(+d.group_score*factor),
-					       margin.left + widthScale_dot(d.non_group_score*factor)]);
-			        
-			    })
-			.attr("y2", function(d) {
-				return heightScale_dot(d.question.trim());// + heightScale_dot.bandwidth();//rangeBand()/2;
-			    })
-			.attr("stroke", '#eee');
-		    
-		    linesGrid.exit().remove();
-
-		    // Make the dotted lines between the dots
+		.append("line");
+		
+		linesGrid.attr("class", "grid")
+		.attr("x1", margin.left)
+		.attr("y1", function(d) {
+			//console.log(d.question, heightScale_dot(d.question), console.log(heightScale_dot.bandwidth()));
+			return heightScale_dot(d.question.trim());// + heightScale_dot.bandwidth();//rangeBand()/2;
+		    })
+		.attr("x2", function(d) {
+			return d3.max([margin.left + widthScale_dot(+d.group_score*factor),
+				       margin.left + widthScale_dot(d.non_group_score*factor)]);
+			
+		    })
+		.attr("y2", function(d) {
+			return heightScale_dot(d.question.trim());// + heightScale_dot.bandwidth();//rangeBand()/2;
+		    })
+		.attr("stroke", '#eee');
+		
+		linesGrid.exit().remove();
+		
+		// Make the dotted lines between the dots
 		    var linesBetween = svg.append("g").selectAll("g")//selectAll("lines.between")
 			.data(data)
 			.enter()

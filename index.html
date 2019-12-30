@@ -6,18 +6,34 @@
 
   <style>
 
+.area {
+  fill: steelblue;
+  clip-path: url(#clip);
+}
+
+.zoom {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
+
+
   </style>
   
 </head>
 <body>
 
-  <div id="groupedBar"></div>
+  <!--div id="groupedBar"></div>
   <br>
   <div id="dotPlot"></div>
   <br>
-  <div id="pie"></div>
+  <div id="pie"></div-->
+<!--svg width="960" height="500"></svg-->
+  <div id="timeseries">
+  </div>
 
-
+  <div id="dotPlot">
+  </div>
   <!--div id="journey_map"></div-->
 
 
@@ -42,7 +58,7 @@
 
   <div id="heatmap"></div>
   -->
-  
+  <!--script src="timeSeries.js"></script-->
   <script src="load_charts.js"></script>
   
 </body>

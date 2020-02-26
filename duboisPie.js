@@ -6,18 +6,19 @@ var radius = Math.min(width, height) / 2.3;
 //array of colors for the pie (in the same order as the dataset)
 
  
-data = [
-	{'group': 'men',  label: 'CDU', value: 1 },
-	{'group': 'men',  label: 'SPD', value: 2 },
-	{'group': 'men',  label: 'Die Grünen', value: 1 },
-	{'group': 'men',  label: 'Die Mitte', value: 1 },
-	{'group': 'men',  label: 'dd', value: 3},
-	{'group': 'women',  label: 'CDU', value: 1 },
-	{'group': 'women',  label: 'SPD', value: 1 },
-	{'group': 'women',  label: 'Die Grünen', value: 1 },
-	{'group': 'women',  label: 'Die Mitte', value: 5 },
-	{'group': 'women',  label: 'dd', value: 8}
-	];
+data = [{'group': 'Jewelry gifters', 'value': 0.06577601678995558, 'label': 'No HS'}, {'group': 'All gifters', 'value': 0.05892639443987988, 'label': 'No HS'}, {'group': 'Jewelry gifters', 'value': 0.42071265003551095, 'label': 'High school graduate'}, {'group': 'All gifters', 'value': 0.42139891751312525, 'label': 'High school graduate'}, {'group': 'Jewelry gifters', 'value': 0.18709998850484602, 'label': 'Some college'}, {'group': 'All gifters', 'value': 0.1825437943029787, 'label': 'Some college'}, {'group': 'Jewelry gifters', 'value': 0.1099832222116208, 'label': '2-year'}, {'group': 'All gifters', 'value': 0.10466934663989846, 'label': '2-year'}, {'group': 'Jewelry gifters', 'value': 0.14770694661907147, 'label': '4-year'}, {'group': 'All gifters', 'value': 0.15523338902407804, 'label': '4-year'}, {'group': 'Jewelry gifters', 'value': 0.06872117583899515, 'label': 'Post-grad'}, {'group': 'All gifters', 'value': 0.07722815808003965, 'label': 'Post-grad'}]
+//[
+//	{'group': 'men',  label: 'CDU', value: 1 },
+//	{'group': 'men',  label: 'SPD', value: 2 },
+//	{'group': 'men',  label: 'Die Grünen', value: 1 },
+//	{'group': 'men',  label: 'Die Mitte', value: 1 },
+//	{'group': 'men',  label: 'dd', value: 3},
+//	{'group': 'women',  label: 'CDU', value: 1 },
+//	{'group': 'women',  label: 'SPD', value: 1 },
+//	{'group': 'women',  label: 'Die Grünen', value: 1 },
+//	{'group': 'women',  label: 'Die Mitte', value: 5 },
+//	{'group': 'women',  label: 'dd', value: 8}
+//	];
 
 console.log(d3.map(data, function(d){return d.label;}).keys());
 
@@ -29,7 +30,7 @@ var color = d3.scaleOrdinal()
     
 
 
-var svg = d3.select("#chart")
+var svg = d3.select("#duboischart")
     .append("svg")              //create the SVG element inside the <body>
     .attr("width", width)           //set the width and height of our visualization (these will be attributes of the <svg> tag
     .attr("height", height)
@@ -57,7 +58,7 @@ function getFilteredData(data, group) {
 }
 
 
-var arcs1 = svg.data([getFilteredData(data, 'men')])                   //associate our data with the document
+var arcs1 = svg.data([getFilteredData(data, 'Jewelry gifters')])                   //associate our data with the document
     .selectAll("g.slice1")     //this selects all <g> elements with class slice (there aren't any yet)
     .data(pie1)  //associate the generated pie data (an array of arcs, each having startAngle, endAngle and value properties) 
     .enter()   //this will create <g> elements for every "extra" data element that should be associated with a selection. The result is creating a <g> for every object in the data array
@@ -66,6 +67,8 @@ var arcs1 = svg.data([getFilteredData(data, 'men')])                   //associa
  
 arcs1.append("svg:path")
     .attr("fill", function(d, i) { return d3.rgb(color(d.data.label)).darker(1); } ) //set the color for each slice to be chosen from the color function defined above
+    .attr("stroke", "black")
+    .style("stroke-width", "2px")
     .attr("d", arc);                                    //this creates the actual SVG path using the associated data (pie) with the arc drawing function
  
 arcs1.append("svg:text")                            //add a label to each slice
@@ -91,7 +94,7 @@ var pie2 = d3.pie()           //this will create arc data for us given a list of
 
 ///// facing down
 
-var arcs2 = svg.data([getFilteredData(data, 'women')])                   //associate our data with the document
+var arcs2 = svg.data([getFilteredData(data, 'All gifters')])                   //associate our data with the document
     .selectAll("g.slice2")     //this selects all <g> elements with class slice (there aren't any yet)
     .data(pie2)  //associate the generated pie data (an array of arcs, each having startAngle, endAngle and value properties) 
     .enter()   //this will create <g> elements for every "extra" data element that should be associated with a selection. The result is creating a <g> for every object in the data array
@@ -100,6 +103,8 @@ var arcs2 = svg.data([getFilteredData(data, 'women')])                   //assoc
 
 arcs2.append("svg:path")
     .attr("fill", function(d, i) { return d3.rgb(color(d.data.label)).darker(1); } ) //set the color for each slice to be chosen from the color function defined above
+    .attr("stroke", "black")
+    .style("stroke-width", "2px")
     .attr("d", arc);                                    //this creates the actual SVG path using the associated data (pie) with the arc drawing function
  
 arcs2.append("svg:text")                                     //add a label to each slice

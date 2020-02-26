@@ -37,11 +37,31 @@ var persona = "Carpe Diem Shopper";
 //	   params
 //	   );
 
-dotPlot(
-	   "http://localhost:8000/pandora_age.json",//app.naccix.io/zulily/age?persona=" + persona,
-	   "#dotPlot",
-	   { num_type: "percent", bgcolor: "white", "colorscheme": ["#000", "#aaa"],  height: 400, width: 600, sort: 'none'}
-	   );
+//pyramidChart("http://localhost:8000/pandora_age.json",
+//	     "#agePlot", 'undefined');
+
+//scatterPlot("http://localhost:8000/pandora_social.json",
+//	    "#socialPlot", {'axes': 'show_axes'});
+
+
+scatterPlot("http://localhost:8000/luminary_attitudes.json",
+	    "#socialPlot", {'axes': ''});
+
+
+//heatmap("http://localhost:8000/show_corr_1.json",
+//	"#heatmap_1", {})
+//
+//heatmap("http://localhost:8000/show_corr_2.json",
+//	"#heatmap_2", {})
+
+
+
+
+//dotPlot(
+//	   "http://localhost:8000/pandora_age.json",//app.naccix.io/zulily/age?persona=" + persona,
+//	   "#dotPlot",
+//	   { num_type: "percent", bgcolor: "white", "colorscheme": ["#CC3300", "#000"],  height: 400, width: 600, sort: 'none'}
+//	   );
 
 
 

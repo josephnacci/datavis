@@ -43,6 +43,14 @@ var persona = "Carpe Diem Shopper";
 //scatterPlot("http://localhost:8000/pandora_social.json",
 //	    "#socialPlot", {'axes': 'show_axes'});
 
+chart_map = {'multiLine': multiLine}
+URL = "http://localhost:5000/chart?project=pandora&dashboard=kpi&chart_name=competitor_search"
+    $.get(URL, function(data){
+	    console.log(data)
+	    chart_map[data['chart_type']](data['chart_data'], "#search", data['params'])
+	})
+
+
 
 scatterPlot("http://localhost:8000/luminary_attitudes.json",
 	    "#socialPlot", {'axes': ''});

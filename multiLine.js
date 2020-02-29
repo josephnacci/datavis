@@ -32,7 +32,7 @@ var multiLine = function multLine(all_data, selector, params) {
     console.log(data);
 
     /* Format Data */
-    if (params.time_axis === true) {
+    if (params.time_axis === 1) {
 	var parseDate = d3.timeParse(params.time_parse);
 	data.forEach(function(d) {
 		d.x = parseDate(d.x);
@@ -249,10 +249,10 @@ var multiLine = function multLine(all_data, selector, params) {
       .attr("stroke", params.grid_color)
       .style("z-index", "-10000");
 
-  if (params.hide_y_axis == true) {
+  if (params.hide_y_axis == 1) {
       yaxis.call(g => g.select(".domain").remove());
   }
-  if (params.hide_x_axis == true) {
+  if (params.hide_x_axis == 1) {
       xaxis.call(g => g.select(".domain").remove());
   }  
     }
@@ -323,7 +323,7 @@ var multiLine = function multLine(all_data, selector, params) {
 	  .attr("stroke", colors[i1])
 	  .style("z-index", "-10000");
 
-      if (params.hide_y_axis == true) {
+      if (params.hide_y_axis == 1) {
 	  yaxis_secondary.call(g => g.select(".domain").remove());
       }
       

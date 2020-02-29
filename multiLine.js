@@ -118,15 +118,18 @@ var multiLine = function multLine(all_data, selector, params) {
     .attr("class", "line")
     .attr("fill", "none");
 
-  var tooltipDiv = d3
-    .select("body")
-    .append("div")
-    .attr("id", "tooltip"+selector_class)
-    .attr("class", "tooltip tooltip"+selector_class)
-    .style("background-color", "#C4C4C4")
-    .style("padding", "5px")
-    .style("border-radius", "10px")
-    .style("opacity", 0);
+
+    if (params.tooltip === 1){
+	var tooltipDiv = d3
+	    .select("body")
+	    .append("div")
+	    .attr("id", "tooltip"+selector_class)
+	    .attr("class", "tooltip tooltip"+selector_class)
+	    .style("background-color", "#C4C4C4")
+	    .style("padding", "5px")
+	    .style("border-radius", "10px")
+	    .style("opacity", 0);
+    }
 
     var colors = params.color_list;
 
@@ -187,40 +190,42 @@ var multiLine = function multLine(all_data, selector, params) {
 	  })
       .attr("fill", colors[group])
       .attr("r", params.point_size + "px")
-      .on("mouseover", function(d) {
-	      tooltipDiv.style("opacity", 0.9);
-        tooltipDiv
-	    .html(
-            "<strong> Week of " +
-	    (d.x).toDateString() +
-              "</strong><br>" +
-              "<span style='width:" +
-              2 * params.point_size +
-              ";height:" +
-              2 * params.point_size +
-              ";background-color:" +
-              colors[0] +
-              ";display:inline-block;border-radius:50%;'></span> " +
-	    (factor * d.y[0]).toFixed(0) +
-              " sign-ups <br>" +
-              "<span style='width:" +
-              2 * params.point_size +
-              ";height:" +
-              2 * params.point_size +
-              ";background-color:" +
-              colors[1] +
-              ";display:inline-block;border-radius:50%;'></span> " +
-	    (factor * d.y[1]).toFixed(0) +
-              " sign-ups"
-		  )
-	    .style("left", d3.event.pageX + 30 + "px")
-	    .style("top", (d3.event.pageY - 50) + "px");
-	  })
-      .on("mouseout", function(d) {
-        tooltipDiv
-	    .style("opacity", 0)
-	    .style("top", d3.event.pageX + 100 + "px");
-	  });
+      if (params.tooltip === 1){
+	  dots.on("mouseover", function(d) {
+		  tooltipDiv.style("opacity", 0.9);
+		  tooltipDiv
+		      .html(
+			    "<strong> Week of " +
+			    (d.x).toDateString() +
+			    "</strong><br>" +
+			    "<span style='width:" +
+			    2 * params.point_size +
+			    ";height:" +
+			    2 * params.point_size +
+			    ";background-color:" +
+			    colors[0] +
+			    ";display:inline-block;border-radius:50%;'></span> " +
+			    (factor * d.y[0]).toFixed(0) +
+			    " sign-ups <br>" +
+			    "<span style='width:" +
+			    2 * params.point_size +
+			    ";height:" +
+			    2 * params.point_size +
+			    ";background-color:" +
+			    colors[1] +
+			    ";display:inline-block;border-radius:50%;'></span> " +
+			    (factor * d.y[1]).toFixed(0) +
+			    " sign-ups"
+			    )
+		      .style("left", d3.event.pageX + 30 + "px")
+		      .style("top", (d3.event.pageY - 50) + "px");
+	      })
+	      .on("mouseout", function(d) {
+		      tooltipDiv
+			  .style("opacity", 0)
+			  .style("top", d3.event.pageX + 100 + "px");
+		  });
+      }
 	    }
     
     

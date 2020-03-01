@@ -138,7 +138,7 @@ var multiDotPlot = function multiDotPlot(all_data, selector, params) {
     ///// select material or object subgroup
     //function dimTypeSelect(){}
     dim_val_dd_location = {
-	left: params.button_x -180,
+	left: params.button_x - 180,
 	top: params.button_y - 8
     };
     dim_dd_location = { left: params.button_x - 450, top: params.button_y - 8 };
@@ -168,7 +168,6 @@ var multiDotPlot = function multiDotPlot(all_data, selector, params) {
 	var unique = [];
 	var distinct = [];
 	for (let i = 0; i < all_data["data"].length; i++) {
-	    console.log(all_data["data"][i][dim_type]);
 	    if (!unique[all_data["data"][i][dim_type]]) {
 		distinct.push(all_data["data"][i][dim_type]);
 		unique[all_data["data"][i][dim_type]] = 1;
@@ -178,14 +177,12 @@ var multiDotPlot = function multiDotPlot(all_data, selector, params) {
 	//dim_val_sel = ["charms", "bracelet"];
 	dim_val_types = distinct;
 	dim_val_sel = distinct;
-	console.log(dim_val_sel);
 
     var select = d3
         .select("#dim_val_dd")
         .append("select")
         .on("change", function(d) {
 		default_dim_value = dim_val_sel[this.selectedIndex];
-		console.log(default_dim_value);
 
 		d3.select("#count").style("background-color", "#BDBDBD");
 		d3.select("#percent").style("background-color", "#9DA8FB");
@@ -270,7 +267,6 @@ var multiDotPlot = function multiDotPlot(all_data, selector, params) {
 	    return dim_sel[i];
 	});
 
-    console.log(dim_dd_div);
 
     //onsole.log(data);
     /////////////////////////DOTS
@@ -281,40 +277,26 @@ var multiDotPlot = function multiDotPlot(all_data, selector, params) {
     function drawChart(all_data, display_type, dim_type, dim_value, axis_value) {
 	function processData(data, dim_type, dim_value) {
 	    new_data = [];
-	    console.log(dim_type, dim_value);
 	    for (var i = 0; i < data.length; i++) {
 		if (data[i][dim_type] == dim_value) {
 		    new_data.push(data[i]);
 		}
 	    }
-	    console.log("new data", new_data);
 	    return new_data;
 	}
 
 	axis_value = dim_type === "object" ? "material" : "object";
-	console.log(
-		    "display type",
-		    display_type,
-		    "dim type",
-		    dim_type,
-		    " axis value",
-      axis_value
-		    );
+
 	svg_dot.selectAll("*").remove();
 	var data = processData(all_data["data"], dim_type, dim_value);
 	var chart_params = all_data["data_params"];
-	var dot_classes = chart_params["classes"];
-
-	console.log(all_data, chart_params);
+	var classes = chart_params["classes"];
 
 	var chart_value = display_type;
 
-	console.log(data, dot_classes);
-	console.log(data[0][params.chart_value], params.chart_value);
 
 	pandora_score_of_question = {};
 	mean_question = {};
-	//console.log(mean_question);
 
 	if (params.sort_by === "brand") {
 	    data = data.sort(function(x, y) {
@@ -378,8 +360,8 @@ var multiDotPlot = function multiDotPlot(all_data, selector, params) {
 
     var colors = params.color_list;
     var brand_color = {};
-    for (var i = 0; i < dot_classes.length; i++) {
-	brand_color[dot_classes[i]] = colors[i];
+    for (var i = 0; i < classes.length; i++) {
+	brand_color[classes[i]] = colors[i];
     }
 
     // Make the faint lines from y labels to highest dot
@@ -504,9 +486,9 @@ var multiDotPlot = function multiDotPlot(all_data, selector, params) {
       xaxis = svg_dot
 	  .append("g")
 	  .attr("transform", "translate(0," + height_dot + ")")
-	  .call(d3.axisBottom(widthScale_dot));
+	  .call(d3.axisBottom(widthScale_dot).tickFormat(d => (chart_value == "fraction") ? (d + "%") : d));
 
-      xaxis.selectAll(".tick text").call(wrap, 20);
+      xaxis.selectAll(".tick text").call(wrap, 30);
 
       // Add the Y Axis
       yaxis = svg_dot
@@ -529,7 +511,6 @@ var multiDotPlot = function multiDotPlot(all_data, selector, params) {
 	  xaxis.call(g => g.select(".domain").remove());
       }
     }
-
     xaxis.exit().remove();
     yaxis.exit().remove();
     //svg_dot.exit().remove();
@@ -565,47 +546,53 @@ var multiDotPlot = function multiDotPlot(all_data, selector, params) {
     //for (var i = 0; i < classes.length; i++) {
     //brand_color[classes[i]] = colors[i];
     //current_x;
-      legend
-	  .append("g")
-	  .selectAll("g") //svg_dot.selectAll("lines.grid")
-	  .data(dot_classes)
-	  .enter()
-	  .append("circle")
-	  .attr("class", "dots")
-	  .attr("cx", function(d, i) { console.log(d); return i*(100);})//current_x)
-	  .attr("cy", params.legend_y_anchor + 20)
-	  .attr("fill", function(d, i) {return brand_color[d]})
-	  .attr("r", params.point_size)
-	  .on("mouseover", function(d, i) {
-		  console.log(d, i);
-		  d3.selectAll(".dots").style("opacity", function(d2, i) {
-			  //console.log(d.name, d2.name);
-			  if (d == d2.company | d == d2) {
-			      return 1;
-			  } else {
-			      return 0.2;
-			  }
-		      });
-	      })
-	  .on("mouseout", function(d) {
-		  d3.selectAll(".dots").style("opacity", 1);
-	      });
+    legend
+	.append("g")
+	.selectAll("g") //svg_dot.selectAll("lines.grid")
+	.data(classes)
+	.enter()
+	.append("circle")
+	.attr("class", "dots")
+	.attr("cx", function(d, i) {
+		return i * 100;
+	    }) //current_x)
+	.attr("cy", params.legend_y_anchor + 20)
+	.attr("fill", function(d, i) {
+		return brand_color[d];
+	    })
+	.attr("r", params.point_size)
+	.on("mouseover", function(d, i) {
+		d3.selectAll(".dots").style("opacity", function(d2, i) {
+			if ((d == d2.company) | (d == d2)) {
+			    return 1;
+			} else {
+			    return 0.2;
+			}
+		    });
+	    })
+	.on("mouseout", function(d) {
+		d3.selectAll(".dots").style("opacity", 1);
+	    });
 
-      legend
-          .append("g")
-	  .selectAll("g") //svg_dot.selectAll("lines.grid")
-	  .data(dot_classes)
-	  .enter()
+    legend
+	.append("g")
+	.selectAll("g") //svg_dot.selectAll("lines.grid")
+	.data(classes)
+	.enter()
 
-	  .append("text")
-	  .attr("fill", "#000")
-	  .attr("x", function(d, i) { console.log(i); return i*(100) + 7;})
-	  .attr("y", params.legend_y_anchor + 20)
-	  .attr("dy", "0.32em")
-	  .style("text-anchor", "left")
-	  .text(function(d) {return d;});
+	.append("text")
+	.attr("fill", "#000")
+	.attr("x", function(d, i) {
+		return i * 100 + 7;
+	    })
+	.attr("y", params.legend_y_anchor + 20)
+	.attr("dy", "0.32em")
+	.style("text-anchor", "left")
+	.text(function(d) {
+		return d;
+	    });
 
-      //}
+    //}
     }
 
     /*

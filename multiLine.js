@@ -1,6 +1,6 @@
 var multiLine = function multLine(all_data, selector, params) {
     //chart size definition
-    var margin = { top: 50, right: 100, bottom: 80, left: 100 };
+    var margin = { top: 70, right: 100, bottom: 80, left: 100 };
 
     if ("width" in params) {
 	width = params.width - margin.left - margin.right;
@@ -271,7 +271,21 @@ var multiLine = function multLine(all_data, selector, params) {
 	norm_names.push({'name': chart_params["group_names"][i], "norm_val": norm_factors[i]})
     
 	    }
-  
+    var length_array = [0];
+    var row_array = [0];
+    var row_count = 0;
+    for (let i=0; i<norm_names.length; i++){
+	length_array.push(length_array[i] + norm_names[i]['name'].length)
+	    if (length_array[i]*10 + params.legend_x_anchor > width - margin.left){
+		row_count += 1;
+		row_array.push(row_count)
+		    length_array[i+1] = 0;
+	    }
+	    else{
+		row_array.push(row_count)
+		    }
+    }
+
   
     yaxis_secondary = svg.append("g")
   
@@ -288,9 +302,9 @@ var multiLine = function multLine(all_data, selector, params) {
     .append("circle")
     .attr("class", "dots")
     .attr("cx", function(d, i) {
-	    return i * params.legend_width + params.legend_x_anchor;
+	    return (length_array[i])*10 + params.legend_x_anchor ;
 	}) //current_x)
-    .attr("cy", params.legend_y_anchor + 20)
+    .attr("cy", function(d, i){ return params.legend_y_anchor + 20 + 15*row_array[i];})
     .attr("fill", function(d, i) {
 	    return colors[i];
 	})
@@ -369,10 +383,9 @@ var multiLine = function multLine(all_data, selector, params) {
     .append("text")
     .attr("fill", "#000")
     .attr("x", function(d, i) {
-	    console.log(i);
-	    return i * params.legend_width + 10  + params.legend_x_anchor;
+	    return (length_array[i] )*10 + 10  + params.legend_x_anchor;
 	})
-    .attr("y", params.legend_y_anchor + 20)
+    .attr("y", function(d, i){ return params.legend_y_anchor + 20 + 15*row_array[i];})
     .attr("dy", "0.32em")
     .style("text-anchor", "left")
     .text(function(d) {
@@ -387,7 +400,7 @@ var multiLine = function multLine(all_data, selector, params) {
     .attr("x", params.title_x)
     .attr("y", params.title_y)
     .attr("dy", "0.36em")
-    .style("text-anchor", "middle")
+    .style("text-anchor", "left")
     .text(chart_params["title"]);
 
     //text styling

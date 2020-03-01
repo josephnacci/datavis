@@ -404,13 +404,13 @@ var multiLine = function multLine(all_data, selector, params) {
     
     instructions = svg
 	.append("text")
-	.attr("x", width + margin.right)
+	.attr("x", width + margin.right - margin.left)
 	.attr("y", params.title_y)
 	.style("text-anchor", "end")
 	.text("*Values are normalized, rollover a")
     instructions2 = svg
 	.append("text")
-	.attr("x", width + margin.right)
+	.attr("x", width + margin.right - margin.left)
 	.attr("y", params.title_y+12)
 	.style("text-anchor", "end")
 	.text("circle in the legend to show scale")

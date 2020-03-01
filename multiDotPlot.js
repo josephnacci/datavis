@@ -522,10 +522,10 @@ var multiDotPlot = function multiDotPlot(all_data, selector, params) {
 	  .attr("stroke", params.grid_color)
 	  .attr("z-index", "-10000");
 
-      if (params.hide_y_axis == true) {
+      if (params.hide_y_axis == 1) {
 	  yaxis.call(g => g.select(".domain").remove());
       }
-      if (params.hide_x_axis == true) {
+      if (params.hide_x_axis == 1) {
 	  xaxis.call(g => g.select(".domain").remove());
       }
     }

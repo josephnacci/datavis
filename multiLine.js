@@ -404,20 +404,19 @@ var multiLine = function multLine(all_data, selector, params) {
     
     instructions = svg
 	.append("text")
-	.attr("x", width)
+	.attr("x", width + margin.right)
 	.attr("y", params.title_y)
 	.style("text-anchor", "end")
 	.text("*Values are normalized, rollover a")
     instructions2 = svg
 	.append("text")
-	.attr("x", width)
+	.attr("x", width + margin.right)
 	.attr("y", params.title_y+12)
 	.style("text-anchor", "end")
 	.text("circle in the legend to show scale")
 	}
 
-    instructions.attr("font-size", "10px").attr("fill", params.font_color);
-    instructions2.attr("font-size", "10px").attr("fill", params.font_color);
+
 
 
 
@@ -447,6 +446,10 @@ var multiLine = function multLine(all_data, selector, params) {
     .attr("font-weight", "bold")
     .attr("fill", params.font_color);
 
+    if (params.normalize_flag == 1){
+	instructions.attr("font-size", "9px").attr("fill", params.font_color);
+	instructions2.attr("font-size", "9px").attr("fill", params.font_color);
+    }
     function wrap(text, width) {
 	text.each(function() {
 		var text = d3.select(this),

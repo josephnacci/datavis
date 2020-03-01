@@ -303,7 +303,7 @@ var multiDotPlot = function multiDotPlot(all_data, selector, params) {
 	svg_dot.selectAll("*").remove();
 	var data = processData(all_data["data"], dim_type, dim_value);
 	var chart_params = all_data["data_params"];
-	var classes = all_data["classes"];
+	var classes = chart_params["classes"];
 
 	console.log(all_data, chart_params);
 

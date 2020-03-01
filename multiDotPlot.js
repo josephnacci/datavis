@@ -417,7 +417,7 @@ var multiDotPlot = function multiDotPlot(all_data, selector, params) {
 	.on("mouseover", function(d) {
 		d3.selectAll(".dots").style("opacity", function(d2, i) {
 			//console.log(d.name, d2.name);
-			if (d.company == d2.company) {
+			if ((d.company == d2.company) | (d.company == d2)) {
 			    return 1;
 			} else {
 			    return 0.2;

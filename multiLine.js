@@ -324,7 +324,7 @@ var multiLine = function multLine(all_data, selector, params) {
         yScale2 = d3
 	    .scaleLinear()
 	    .domain([0, d.norm_val + 0.03 * factor])
-	    .range([height - margin.top, 0]);
+	    .range([height, 0]);
 
         yaxis_secondary = svg.append("g");
 

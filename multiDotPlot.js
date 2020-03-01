@@ -303,13 +303,13 @@ var multiDotPlot = function multiDotPlot(all_data, selector, params) {
 	svg_dot.selectAll("*").remove();
 	var data = processData(all_data["data"], dim_type, dim_value);
 	var chart_params = all_data["data_params"];
-	var classes = chart_params["classes"];
+	var dot_classes = chart_params["classes"];
 
 	console.log(all_data, chart_params);
 
 	var chart_value = display_type;
 
-	console.log(data, classes);
+	console.log(data, dot_classes);
 	console.log(data[0][params.chart_value], params.chart_value);
 
 	pandora_score_of_question = {};
@@ -378,8 +378,8 @@ var multiDotPlot = function multiDotPlot(all_data, selector, params) {
 
     var colors = params.color_list;
     var brand_color = {};
-    for (var i = 0; i < classes.length; i++) {
-	brand_color[classes[i]] = colors[i];
+    for (var i = 0; i < dot_classes.length; i++) {
+	brand_color[dot_classes[i]] = colors[i];
     }
 
     // Make the faint lines from y labels to highest dot
@@ -568,7 +568,7 @@ var multiDotPlot = function multiDotPlot(all_data, selector, params) {
       legend
 	  .append("g")
 	  .selectAll("g") //svg_dot.selectAll("lines.grid")
-	  .data(classes)
+	  .data(dot_classes)
 	  .enter()
 	  .append("circle")
 	  .attr("class", "dots")
@@ -594,7 +594,7 @@ var multiDotPlot = function multiDotPlot(all_data, selector, params) {
       legend
           .append("g")
 	  .selectAll("g") //svg_dot.selectAll("lines.grid")
-	  .data(classes)
+	  .data(dot_classes)
 	  .enter()
 
 	  .append("text")

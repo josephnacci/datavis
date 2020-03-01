@@ -246,7 +246,8 @@ var multiLine = function multLine(all_data, selector, params) {
       .ticks(5)
       .tickSize(-width)
 	       );
-    yaxis.selectAll("text").attr("dx", "-0.5em");
+    yaxis.selectAll("text").attr("dx", "-0.5em").attr("opacity", function(d){ return (params.normalize_flag) ? 0 : 1 ;});
+
 
     //y grid line
     yaxis
@@ -398,6 +399,29 @@ var multiLine = function multLine(all_data, selector, params) {
 	});
 
     //////Title
+
+    if (params.normalize_flag == 1){
+    
+    instructions = svg
+	.append("text")
+	.attr("x", width)
+	.attr("y", params.title_y)
+	.style("text-anchor", "end")
+	.text("*Values are normalized, rollover a")
+    instructions2 = svg
+	.append("text")
+	.attr("x", width)
+	.attr("y", params.title_y+12)
+	.style("text-anchor", "end")
+	.text("circle in the legend to show scale")
+	}
+
+    instructions.attr("font-size", "10px").attr("fill", params.font_color);
+    instructions2.attr("font-size", "10px").attr("fill", params.font_color);
+
+
+
+
   title = svg
     .append("text")
     .attr("x", params.title_x)

@@ -279,7 +279,7 @@ var multiLine = function multLine(all_data, selector, params) {
     var row_count = 0;
     for (let i = 0; i < norm_names.length; i++) {
 	length_array.push(length_array[i] + norm_names[i]["name"].length);
-	if (length_array[i] * 10 + params.legend_x_anchor > width - margin.left) {
+	if ((length_array[i]+ norm_names[i]["name"].length) * 10 + params.legend_x_anchor > width - margin.left) {
 	    row_count += 1;
 	    row_array.push(row_count);
 	    length_array[i + 1] = 0;

@@ -1,6 +1,6 @@
 var multiLine = function multLine(all_data, selector, params) {
     //chart size definition
-    var margin = { top: 70, right: 50, bottom: 30, left: 70 };
+    var margin = { top: 70, right: 100, bottom: 30, left: 70 };
 
     if ("width" in params) {
 	width = params.width - margin.left - margin.right;

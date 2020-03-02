@@ -473,8 +473,8 @@ var multiLine = function multLine(all_data, selector, params) {
 	    return margin.left;
 	})
     .style("top", function(d) {
-	    console.log(this);
-	    return -100;
+
+	    return -300;
 	})
     .html("<p width='200' > " + chart_params["insight_text"] + " </p>")
     .style("opacity", 0);

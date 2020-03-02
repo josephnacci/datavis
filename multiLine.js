@@ -251,7 +251,10 @@ var multiLine = function multLine(all_data, selector, params) {
 	.attr("transform", "translate(0," + (height) + ")")
 	.call(d3.axisBottom(xScale));
 
-    xaxis.selectAll(".tick text").call(wrap, 100);
+    xaxis.selectAll(".tick text").call(wrap, 100).attr("text-anchor", "end")
+	.attr("dx", "0em")
+	.attr("dy", "0em")
+	.attr("transform", "rotate(-35)");
 
     // Add the Y Axis
     yaxis.call(

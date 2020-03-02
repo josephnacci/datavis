@@ -450,7 +450,7 @@ var multiLine = function multLine(all_data, selector, params) {
     .style("top", function(d) {
         return document
 	.getElementById(selector.slice(1, selector.length))
-	.getBoundingClientRect().bottom;
+	.getBoundingClientRect().top - 10;
 	})
     //.style("cx", width + 100)
     //.style("cy", params.title_y)

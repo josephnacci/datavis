@@ -16,13 +16,27 @@ var multiLine = function multLine(all_data, selector, params) {
 
     d3.selectAll(selector + " > *").remove();
 
-  var svg = d3
-    .select(selector)
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+    if (params.full_size == 1){
+	var svg = d3
+	    .select(selector)
+	    .append("svg")
+	    .attr("preserveAspectRatio", "xMinYMin meet")
+	    .attr("viewBox", "0 0 960 500")
+	    //.attr("width", width + margin.left + margin.right)
+	    //.attr("height", height + margin.top + margin.bottom)
+	    .append("g")
+	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    }
+    else{
+	var svg = d3
+	.select(selector)
+	.append("svg")
+	.attr("width", width + margin.left + margin.right)                                                                                                                        
+	.attr("height", height + margin.top + margin.bottom)                                                                                                                      
+	.append("g")
+	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    }
 
     var selector_class = selector.slice(1, selector.length);
 

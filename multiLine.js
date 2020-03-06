@@ -433,60 +433,60 @@ var multiLine = function multLine(all_data, selector, params) {
 	.text("circle in the legend to show scale")
 	}
 
-
-    if ("insight_text" in chart_params) {
-    insights = d3
-    .select(selector)
-    .append("div")
-    .attr("id", "insights_text")
-    .style("left", function(d) {
-	    return (
-          document
-	  .getElementById(selector.slice(1, selector.length))
-	  .getBoundingClientRect().left +
-          width / 2
-		    );
-	})
-    .style("top", function(d) {
-        return document
-	.getElementById(selector.slice(1, selector.length))
-	.getBoundingClientRect().top - 10;
-	})
-    //.style("cx", width + 100)
-    //.style("cy", params.title_y)
-    .style("position", "absolute")
-    .html(
-        "<span style='text-decoration: underline;'> <img height=12 src='https://calm-gorge-41817.herokuapp.com/images/img/favicon.ico'></img> Insights</span>"
-	  );
-
-    var insightsDiv = d3
-    .select(selector)
-    .append("div")
-    .attr("id", "insightstooltip" + selector_class)
-    .attr("class", "tooltip insightstooltip" + selector_class)
-    .style("width", width + "px")
-    .style("position", "relative")
-    .style("background-color", "#C4C4C4")
-    .style("padding", "5px")
-    .style("border-radius", "10px")
-    .style("left", function(d) {
-	    return margin.left;
-	})
-    .style("top", function(d) {
-
-	    return -300;
-	})
-    .html("<p width='200' > " + chart_params["insight_text"] + " </p>")
-    .style("opacity", 0);
-
-    insights
-    .on("mouseover", function(d) {
-	    insightsDiv.style("opacity", 0.9);
-	})
-    .on("mouseout", function(d) {
-	    insightsDiv.style("opacity", 0);
-	});
-    }
+    // INSIGHTS TEXT SECTION, REMOVE FOR NOW
+    //if ("insight_text" in chart_params) {
+    //insights = d3
+    //.select(selector)
+    //.append("div")
+    //.attr("id", "insights_text")
+    //.style("left", function(d) {
+    //	    return (
+    //      document
+    //	  .getElementById(selector.slice(1, selector.length))
+    //	  .getBoundingClientRect().left +
+    //      width / 2
+    //		    );
+    //	})
+    //.style("top", function(d) {
+    //    return document
+    //	.getElementById(selector.slice(1, selector.length))
+    //	.getBoundingClientRect().top - 10;
+    //	})
+    ////.style("cx", width + 100)
+    ////.style("cy", params.title_y)
+    //.style("position", "absolute")
+    //.html(
+    //    "<span style='text-decoration: underline;'> <img height=12 src='https://calm-gorge-41817.herokuapp.com/images/img/favicon.ico'></img> Insights</span>"
+    //	  );
+    //
+    //var insightsDiv = d3
+    //.select(selector)
+    //.append("div")
+    //.attr("id", "insightstooltip" + selector_class)
+    //.attr("class", "tooltip insightstooltip" + selector_class)
+    //.style("width", width + "px")
+    //.style("position", "relative")
+    //.style("background-color", "#C4C4C4")
+    //.style("padding", "5px")
+    //.style("border-radius", "10px")
+    //.style("left", function(d) {
+    //	    return margin.left;
+    //	})
+    //.style("top", function(d) {
+    //
+    //	    return -300;
+    //	})
+    //.html("<p width='200' > " + chart_params["insight_text"] + " </p>")
+    //.style("opacity", 0);
+    //
+    //insights
+    //.on("mouseover", function(d) {
+    //	    insightsDiv.style("opacity", 0.9);
+    //	})
+    //.on("mouseout", function(d) {
+    //	    insightsDiv.style("opacity", 0);
+    //	});
+    //}
 
 
 

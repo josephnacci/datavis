@@ -43,6 +43,24 @@ var persona = "Carpe Diem Shopper";
 //scatterPlot("http://localhost:8000/pandora_social.json",
 //	    "#socialPlot", {'axes': 'show_axes'});
 
+
+var subDataPro = [
+		  {colorIndex: 8, value: 12185, label: "hygienist"},
+		  {colorIndex: 4, value: 10423, label: "assistant"},
+		  {colorIndex: 5, value: 4462, label: "staff"},
+		  {colorIndex: 6, value: 1178, label: "dentist"},
+		  ];
+
+var data = [
+	    {colorIndex: 0, value: 12398,  label: "Practices"},
+	    {colorIndex: 1, value: 28993, childData: subDataPro, label: "Professionals"},
+	    ];
+var data = {"data": data,
+	    "topLevelItem": {label: "Total"}}
+
+
+pieDrill(data, '#pie_drill', {})
+
 chart_map = {'multiLine': multiLine}
 URL = "http://localhost:5000/chart?project=pandora&dashboard=kpi&chart_name=competitor_search"
     $.get(URL, function(data){
